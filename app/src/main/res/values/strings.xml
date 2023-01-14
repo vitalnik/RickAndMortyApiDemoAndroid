@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Rick&amp;Morty</string>
+
+    <string name="characters">Characters</string>
+    <string name="character">Character</string>
+
+    <string name="locations">Locations</string>
+    <string name="location">Location</string>
+
+    <string name="episodes">Episodes</string>
+    <string name="episode">Episode</string>
+
+    <string name="origin">Origin</string>
+    <string name="loading">Loading…</string>
+
+    <string name="species">Species</string>
+    <string name="gender">Gender</string>
+    <string name="status">Status</string>
+
+    <string name="appears_in">Appears in:</string>
+    <string name="appears_in_episodes">Appears in %1$d episode(s)</string>
+    <string name="episode_characters">%1$d character(s) in this episode</string>
+
+    <string name="dimension">Dimension</string>
+    <string name="type">Type</string>
+
+    <string name="location_residents">%1$d resident(s) in this location</string>
+    <string name="number_of_residents">Number of residents: %1$d</string>
+    <string name="number_of_characters">Number of characters: %1$d</string>
+
+    <string name="error_loading_characters">There was an error loading characters. Please try again.</string>
+    <string name="error_loading_locations">There was an error loading locations. Please try again.</string>
+    <string name="error_loading_episodes">There was an error loading episodes. Please try again.</string>
+
+    <string name="oops">Oops</string>
+    <string name="cancel">Cancel</string>
+    <string name="retry">Retry</string>
+    <string name="back">Back</string>
+    <string name="go_home">Go home</string>
+
+    <string name="search_by_name">Search by name</string>
+    <string name="no_characters_found">No characters found</string>
+    <string name="no_locations_found">No locations found</string>
+    <string name="no_episodes_found">No episodes found</string>
+
+
+</resources>
