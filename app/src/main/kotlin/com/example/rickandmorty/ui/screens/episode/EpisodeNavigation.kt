@@ -30,10 +30,14 @@ fun NavGraphBuilder.episodeScreen(
 
         val episodeId = backStackEntry.arguments?.getInt("episodeId", 1)
 
-        LaunchedEffect(key1 = episodeId) {
+        fun getEpisode() {
             episodeId?.let {
                 viewModel.getEpisode(episodeId = it)
             }
+        }
+
+        LaunchedEffect(key1 = episodeId) {
+            getEpisode()
         }
 
         val isLoading by remember {
@@ -49,6 +53,9 @@ fun NavGraphBuilder.episodeScreen(
             onNavigateToCharacter = {
                 val characterJson = Json.encodeToString(it)
                 navController.navigate("$CHARACTER_SCREEN_ROUTE?character=$characterJson&characterId=${it.id}")
+            },
+            onRefresh = {
+                getEpisode()
             },
             onBackPress = {
                 navController.popBackStack()

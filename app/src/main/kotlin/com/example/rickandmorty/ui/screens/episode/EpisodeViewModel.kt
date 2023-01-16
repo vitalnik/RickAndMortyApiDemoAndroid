@@ -25,11 +25,8 @@ class EpisodeViewModel @Inject constructor(
     var charactersFlow = MutableStateFlow<ViewState<List<CharacterDTO>>>(ViewState.Initial)
 
     fun getEpisode(episodeId: Int) {
-
         viewModelScope.launch {
-
             episodeFlow.emit(ViewState.Loading)
-
             kotlin.runCatching {
                 episodeRepo.getEpisode(episodeId = episodeId)
             }.onSuccess {

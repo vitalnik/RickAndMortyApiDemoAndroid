@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,6 +22,7 @@ import com.example.rickandmorty.ui.common.EpisodeCard
 import com.example.rickandmorty.ui.components.*
 import rememberLazyListState
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EpisodesScreen(
     pagingItems: LazyPagingItems<EpisodeDTO>,
@@ -93,9 +95,11 @@ fun EpisodesScreen(
             if (isLoading) {
                 CenteredLoadingIndicator()
             }
+
             if (isEmpty) {
                 EmptyState(stringResource(id = R.string.no_episodes_found))
             }
+
             if (alertDialogVisible) {
                 RetryDialog(
                     errorMessage = stringResource(id = R.string.error_loading_episodes),
@@ -103,9 +107,7 @@ fun EpisodesScreen(
                     onDismissClick = onDismiss
                 )
             }
-
         }
-
     }
 }
 
