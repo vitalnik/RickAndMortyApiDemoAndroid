@@ -1,6 +1,5 @@
 package com.example.rickandmorty.app.network.repositories
 
-import android.util.Log
 import com.example.rickandmorty.app.network.NetworkClient
 import com.example.rickandmorty.app.network.dto.CharacterDTO
 import com.example.rickandmorty.app.network.dto.CharactersDTO
@@ -17,7 +16,6 @@ class CharactersRepository @Inject constructor(
 
     suspend fun getCharacters(pageIndex: Int, searchQuery: String): List<CharacterDTO> {
         val url = "${NetworkClient.BASE_URL}/character?page=$pageIndex$searchQuery"
-        Log.d("TAG", ">>> $url")
         return try {
             val response = networkClient.client.get<CharactersDTO> {
                 url(url)
@@ -33,7 +31,6 @@ class CharactersRepository @Inject constructor(
 
     suspend fun getCharacter(characterId: Int): CharacterDTO {
         val url = "${NetworkClient.BASE_URL}/character/$characterId"
-        Log.d("TAG", ">>> $url")
         val response = networkClient.client.get<CharacterDTO> {
             url(url)
             contentType(ContentType.Application.Json)
@@ -43,7 +40,6 @@ class CharactersRepository @Inject constructor(
 
     suspend fun getCharactersByIds(characterIds: String): List<CharacterDTO> {
         val url = "${NetworkClient.BASE_URL}/character/$characterIds"
-        Log.d("TAG", ">>> $url")
         return if (characterIds.contains(",")) {
             networkClient.client.get<List<CharacterDTO>> {
                 url(url)

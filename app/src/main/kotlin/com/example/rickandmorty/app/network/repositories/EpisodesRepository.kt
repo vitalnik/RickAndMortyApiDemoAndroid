@@ -1,6 +1,5 @@
 package com.example.rickandmorty.app.network.repositories
 
-import android.util.Log
 import com.example.rickandmorty.app.network.NetworkClient
 import com.example.rickandmorty.app.network.dto.EpisodeDTO
 import com.example.rickandmorty.app.network.dto.EpisodesDTO
@@ -17,7 +16,6 @@ class EpisodesRepository @Inject constructor(
 
     suspend fun getEpisodes(pageIndex: Int): List<EpisodeDTO> {
         val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex"
-        Log.d("TAG", ">>> $url")
         return try {
             val response = networkClient.client.get<EpisodesDTO> {
                 url(url)
@@ -33,7 +31,6 @@ class EpisodesRepository @Inject constructor(
 
     suspend fun getEpisode(episodeId: Int): EpisodeDTO {
         val url = "${NetworkClient.BASE_URL}/episode/$episodeId"
-        Log.d("TAG", ">>> $url")
         val response = networkClient.client.get<EpisodeDTO> {
             url(url)
             contentType(ContentType.Application.Json)
@@ -43,7 +40,6 @@ class EpisodesRepository @Inject constructor(
 
     suspend fun getEpisodesByIds(episodesIds: String): List<EpisodeDTO> {
         val url = "${NetworkClient.BASE_URL}/episode/$episodesIds"
-        Log.d("TAG", ">>> $url")
         return if (episodesIds.contains(",")) {
             networkClient.client.get<List<EpisodeDTO>> {
                 url(url)
