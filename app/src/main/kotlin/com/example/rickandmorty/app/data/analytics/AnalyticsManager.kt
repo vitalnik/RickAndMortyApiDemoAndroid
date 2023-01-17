@@ -1,4 +1,4 @@
-package com.example.rickandmorty.app.analytics
+package com.example.rickandmorty.app.data.analytics
 
 import javax.inject.Inject
 import javax.inject.Singleton

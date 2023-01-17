@@ -1,7 +1,7 @@
 package com.example.rickandmorty.ui.screens.home
 
 import androidx.lifecycle.ViewModel
-import com.example.rickandmorty.app.analytics.AnalyticsManager
+import com.example.rickandmorty.app.data.analytics.AnalyticsManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

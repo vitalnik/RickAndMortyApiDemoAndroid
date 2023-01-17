@@ -3,7 +3,6 @@ package com.example.rickandmorty.ui.screens.episode
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,25 +11,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.CharacterDTO
-import com.example.rickandmorty.app.network.dto.EpisodeDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.EpisodeModel
 import com.example.rickandmorty.app.utils.ViewState
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.ui.common.CharactersListHeader
 import com.example.rickandmorty.ui.common.charactersList
 import com.example.rickandmorty.ui.components.*
-import com.example.rickandmorty.ui.preview.CharacterPreviewProvider
-import com.example.rickandmorty.ui.preview.EpisodePreviewProvider
+import com.example.rickandmorty.ui.preview.CharactersPreviewProvider
+import com.example.rickandmorty.ui.preview.EpisodesPreviewProvider
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 
-@OptIn(ExperimentalMaterialApi::class)
+//@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EpisodeScreen(
-    episodeState: ViewState<EpisodeDTO>,
+    episodeState: ViewState<EpisodeModel>,
     isLoading: Boolean = false,
-    charactersState: ViewState<List<CharacterDTO>>,
-    onNavigateToCharacter: (character: CharacterDTO) -> Unit = {},
-    onRefresh: () -> Unit = {},
+    charactersState: ViewState<List<CharacterModel>>,
+    onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
+    //  onRefresh: () -> Unit = {},
     onBackPress: () -> Unit = {},
     onNavigateHome: () -> Unit = {},
 ) {
@@ -43,7 +42,7 @@ fun EpisodeScreen(
             TopAppBar(
                 title = {
                     TopAppBarRow(
-                        title = episodeState.withState { it.episode }
+                        title = episodeState.withState { it.episodeCode }
                             ?: stringResource(id = R.string.episode),
                         icon1 = R.drawable.ic_home,
                         onIcon1Click = {
@@ -60,7 +59,7 @@ fun EpisodeScreen(
             )
         }) { scaffoldPadding ->
 
-        // val pullRefreshState = rememberPullRefreshState(isLoading, onRefresh)
+        //val pullRefreshState = rememberPullRefreshState(isLoading, onRefresh)
 
         Box(
             modifier = Modifier
@@ -115,13 +114,13 @@ fun EpisodeScreen(
 }
 
 @Composable
-private fun EpisodeHeader(episode: EpisodeDTO) {
+private fun EpisodeHeader(episode: EpisodeModel) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
         VerticalSpacer(8.dp)
         Text(text = episode.name, style = MaterialTheme.typography.displaySmall)
-        Text(text = episode.air_date, style = MaterialTheme.typography.bodyMedium)
+        Text(text = episode.airDate, style = MaterialTheme.typography.bodyMedium)
         VerticalSpacer()
     }
 }
@@ -131,8 +130,8 @@ private fun EpisodeHeader(episode: EpisodeDTO) {
 fun EpisodeScreenPreview() {
     RickAndMortyTheme {
         EpisodeScreen(
-            episodeState = ViewState.Populated(EpisodePreviewProvider().values.first()),
-            charactersState = ViewState.Populated(CharacterPreviewProvider().values.toList())
+            episodeState = ViewState.Populated(EpisodesPreviewProvider().values.first()),
+            charactersState = ViewState.Populated(CharactersPreviewProvider().values.toList())
         )
     }
 }

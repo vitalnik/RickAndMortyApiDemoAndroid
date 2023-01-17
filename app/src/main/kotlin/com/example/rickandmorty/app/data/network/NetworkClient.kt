@@ -1,4 +1,4 @@
-package com.example.rickandmorty.app.network
+package com.example.rickandmorty.app.data.network
 
 import android.util.Log
 import io.ktor.client.*

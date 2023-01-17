@@ -4,12 +4,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.example.rickandmorty.app.network.dto.CharacterDTO
-import com.example.rickandmorty.app.network.dto.EpisodeDTO
-import com.example.rickandmorty.app.network.dto.LocationDTO
-import com.example.rickandmorty.app.network.repositories.CharactersRepository
-import com.example.rickandmorty.app.network.repositories.EpisodesRepository
-import com.example.rickandmorty.app.network.repositories.LocationsRepository
+import com.example.rickandmorty.app.data.repositories.CharactersRepository
+import com.example.rickandmorty.app.data.repositories.EpisodesRepository
+import com.example.rickandmorty.app.data.repositories.LocationsRepository
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.EpisodeModel
+import com.example.rickandmorty.app.domain.models.LocationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     val characterNameSearchValue = mutableStateOf("")
 
-    val charactersPagingData: Flow<PagingData<CharacterDTO>> = Pager(
+    val charactersPagingData: Flow<PagingData<CharacterModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
 
@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
 
     val locationNameSearchValue = mutableStateOf("")
 
-    val locationsPagingData: Flow<PagingData<LocationDTO>> = Pager(
+    val locationsPagingData: Flow<PagingData<LocationModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
 
@@ -52,7 +52,7 @@ class MainViewModel @Inject constructor(
         config = PagingConfig(pageSize = 20)
     ).flow.cachedIn(viewModelScope)
 
-    val episodesPagingData: Flow<PagingData<EpisodeDTO>> = Pager(
+    val episodesPagingData: Flow<PagingData<EpisodeModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
                 episodesRepo.getEpisodes(it)

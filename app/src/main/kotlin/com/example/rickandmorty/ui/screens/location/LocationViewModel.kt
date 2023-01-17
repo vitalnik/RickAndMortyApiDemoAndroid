@@ -2,12 +2,12 @@ package com.example.rickandmorty.ui.screens.location
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.app.extensions.getIds
-import com.example.rickandmorty.app.network.dto.CharacterDTO
-import com.example.rickandmorty.app.network.dto.LocationDTO
-import com.example.rickandmorty.app.network.repositories.CharactersRepository
-import com.example.rickandmorty.app.network.repositories.LocationsRepository
+import com.example.rickandmorty.app.data.repositories.CharactersRepository
+import com.example.rickandmorty.app.data.repositories.LocationsRepository
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.LocationModel
 import com.example.rickandmorty.app.utils.ViewState
+import com.example.rickandmorty.app.utils.extensions.idsQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -20,9 +20,9 @@ class LocationViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    var locationFlow = MutableStateFlow<ViewState<LocationDTO>>(ViewState.Initial)
+    var locationFlow = MutableStateFlow<ViewState<LocationModel>>(ViewState.Initial)
 
-    var charactersFlow = MutableStateFlow<ViewState<List<CharacterDTO>>>(ViewState.Initial)
+    var charactersFlow = MutableStateFlow<ViewState<List<CharacterModel>>>(ViewState.Initial)
 
     fun getLocation(locationId: Int) {
 
@@ -35,8 +35,8 @@ class LocationViewModel @Inject constructor(
 
             }.onSuccess {
                 locationFlow.emit(ViewState.Populated(it))
-                if (it.residents.isNotEmpty()) {
-                    getCharacters(it.residents)
+                if (it.residentIds.isNotEmpty()) {
+                    getCharacters(it.residentIds)
                 } else {
                     charactersFlow.emit(ViewState.Populated(listOf()))
                 }
@@ -46,10 +46,10 @@ class LocationViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCharacters(characterUrls: List<String>) {
+    private suspend fun getCharacters(characterIds: List<Int>) {
         charactersFlow.emit(ViewState.Loading)
         kotlin.runCatching {
-            charactersRepo.getCharactersByIds(characterUrls.getIds())
+            charactersRepo.getCharactersByIds(characterIds.idsQuery())
         }.onSuccess {
             charactersFlow.emit(ViewState.Populated(it))
         }.onFailure {

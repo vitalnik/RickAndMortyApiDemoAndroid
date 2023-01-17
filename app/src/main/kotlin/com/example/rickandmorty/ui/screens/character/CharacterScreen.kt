@@ -14,22 +14,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.extensions.getIdFromUrl
-import com.example.rickandmorty.app.network.dto.CharacterDTO
-import com.example.rickandmorty.app.network.dto.EpisodeDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.EpisodeModel
 import com.example.rickandmorty.app.utils.ViewState
+import com.example.rickandmorty.app.utils.extensions.getIdFromUrl
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.ui.common.CharacterImage
 import com.example.rickandmorty.ui.common.EpisodeCard
 import com.example.rickandmorty.ui.components.*
-import com.example.rickandmorty.ui.preview.CharacterPreviewProvider
-import com.example.rickandmorty.ui.preview.EpisodePreviewProvider
+import com.example.rickandmorty.ui.preview.CharactersPreviewProvider
+import com.example.rickandmorty.ui.preview.EpisodesPreviewProvider
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 
 @Composable
 fun CharacterScreen(
-    characterState: ViewState<CharacterDTO>,
-    episodesState: ViewState<List<EpisodeDTO>>,
+    characterState: ViewState<CharacterModel>,
+    episodesState: ViewState<List<EpisodeModel>>,
     onNavigateToEpisode: (episodeId: Int) -> Unit = {},
     onNavigateToLocation: (locationId: Int) -> Unit = {},
     onBackPress: () -> Unit = {},
@@ -127,7 +127,7 @@ fun CharacterScreen(
 }
 
 @Composable
-private fun EpisodeListHeader(episodesState: ViewState<List<EpisodeDTO>>) {
+private fun EpisodeListHeader(episodesState: ViewState<List<EpisodeModel>>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,7 +147,7 @@ private fun EpisodeListHeader(episodesState: ViewState<List<EpisodeDTO>>) {
 
 @Composable
 private fun CharacterHeader(
-    character: CharacterDTO
+    character: CharacterModel
 ) {
 
     Column(
@@ -156,7 +156,7 @@ private fun CharacterHeader(
 
         Row {
 
-            CharacterImage(imageUrl = character.image, size = 200.dp, cornerRadius = 16.dp)
+            CharacterImage(imageUrl = character.imageUrl, size = 200.dp, cornerRadius = 16.dp)
 
             HorizontalSpacer()
 
@@ -185,7 +185,7 @@ private fun CharacterHeader(
                     style = MaterialTheme.typography.labelMedium
                 )
                 Text(
-                    text = character.status,
+                    text = character.status.toString(),
                     style = MaterialTheme.typography.titleMedium
                 )
 
@@ -197,7 +197,7 @@ private fun CharacterHeader(
 
 @Composable
 private fun CharacterSubHeader(
-    character: CharacterDTO,
+    character: CharacterModel,
 ) {
 
     Column(
@@ -216,7 +216,7 @@ private fun CharacterSubHeader(
 
 @Composable
 fun OriginAndLocationCards(
-    character: CharacterDTO,
+    character: CharacterModel,
     onNavigateToLocation: (locationId: Int) -> Unit = {}
 ) {
     Row {
@@ -273,13 +273,13 @@ fun OriginAndLocationCards(
 fun OriginAndLocationCardsPreview() {
     RickAndMortyTheme {
         OriginAndLocationCards(
-            character = CharacterPreviewProvider().values.first(),
+            character = CharactersPreviewProvider().values.first(),
         )
     }
 }
 
 fun LazyListScope.episodesList(
-    episodes: List<EpisodeDTO>,
+    episodes: List<EpisodeModel>,
     onNavigateToEpisode: (episodeId: Int) -> Unit = {}
 ) {
 
@@ -300,8 +300,8 @@ fun LazyListScope.episodesList(
 fun CharacterScreenPreview() {
     RickAndMortyTheme {
         CharacterScreen(
-            characterState = ViewState.Populated(CharacterPreviewProvider().values.first()),
-            episodesState = ViewState.Populated(EpisodePreviewProvider().values.toList())
+            characterState = ViewState.Populated(CharactersPreviewProvider().values.first()),
+            episodesState = ViewState.Populated(EpisodesPreviewProvider().values.toList())
         )
     }
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.EpisodeDTO
+import com.example.rickandmorty.app.domain.models.EpisodeModel
 import com.example.rickandmorty.ui.common.EpisodeCard
 import com.example.rickandmorty.ui.components.*
 import rememberLazyListState
@@ -25,7 +25,7 @@ import rememberLazyListState
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EpisodesScreen(
-    pagingItems: LazyPagingItems<EpisodeDTO>,
+    pagingItems: LazyPagingItems<EpisodeModel>,
     isLoading: Boolean = false,
     isEmpty: Boolean = false,
     alertDialogVisible: Boolean = false,

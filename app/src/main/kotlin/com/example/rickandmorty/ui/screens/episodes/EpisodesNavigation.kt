@@ -2,7 +2,6 @@ package com.example.rickandmorty.ui.screens.episodes
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -19,7 +18,7 @@ fun NavGraphBuilder.episodesScreen(
 
     composable(route = EPISODES_SCREEN_ROUTE) {
 
-        val viewModel = hiltViewModel<EpisodesViewModel>()
+        //val viewModel = hiltViewModel<EpisodesViewModel>()
 
         val pagingItems = mainViewModel.episodesPagingData.collectAsLazyPagingItems()
 

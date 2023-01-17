@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.extensions.clickableWithRipple
+import com.example.rickandmorty.app.utils.extensions.clickableWithRipple
 
 @Composable
 fun NavigationIcon(onClick: () -> Unit = {}) {

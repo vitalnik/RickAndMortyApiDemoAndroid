@@ -1,9 +1,10 @@
-package com.example.rickandmorty.app.network.repositories
+package com.example.rickandmorty.app.data.repositories
 
-import android.util.Log
-import com.example.rickandmorty.app.network.NetworkClient
-import com.example.rickandmorty.app.network.dto.LocationDTO
-import com.example.rickandmorty.app.network.dto.LocationsDTO
+import com.example.rickandmorty.app.data.dto.LocationDto
+import com.example.rickandmorty.app.data.dto.LocationsDto
+import com.example.rickandmorty.app.data.dto.toDomain
+import com.example.rickandmorty.app.data.network.NetworkClient
+import com.example.rickandmorty.app.domain.models.LocationModel
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -15,15 +16,14 @@ class LocationsRepository @Inject constructor(
     private val networkClient: NetworkClient,
 ) {
 
-    suspend fun getLocations(pageIndex: Int, searchQuery: String): List<LocationDTO> {
+    suspend fun getLocations(pageIndex: Int, searchQuery: String): List<LocationModel> {
         val url = "${NetworkClient.BASE_URL}/location?page=$pageIndex$searchQuery"
-        Log.d("TAG", ">>> $url")
         return try {
-            val response = networkClient.client.get<LocationsDTO> {
+            val response = networkClient.client.get<LocationsDto> {
                 url(url)
                 contentType(ContentType.Application.Json)
             }
-            response.results
+            response.results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
             listOf()
         } catch (e: Exception) {
@@ -31,14 +31,13 @@ class LocationsRepository @Inject constructor(
         }
     }
 
-    suspend fun getLocation(locationId: Int): LocationDTO {
+    suspend fun getLocation(locationId: Int): LocationModel {
         val url = "${NetworkClient.BASE_URL}/location/$locationId"
-        Log.d("TAG", ">>> $url")
-        val response = networkClient.client.get<LocationDTO> {
+        val response = networkClient.client.get<LocationDto> {
             url(url)
             contentType(ContentType.Application.Json)
         }
-        return response
+        return response.toDomain()
     }
 }
 

@@ -72,8 +72,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
             "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi"]
+            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"]
 }
 
 dependencies {

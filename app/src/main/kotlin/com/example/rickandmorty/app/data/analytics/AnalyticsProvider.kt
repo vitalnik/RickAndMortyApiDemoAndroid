@@ -1,5 +1,6 @@
-package com.example.rickandmorty.app.analytics
+package com.example.rickandmorty.app.data.analytics
 
+import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,9 +12,7 @@ class AnalyticsProvider @Inject constructor() {
     }
 
     fun log(event: String) {
-
-        // logging analytics here
-
+        Log.d("TAG", "Logging analytics event: $event")
     }
 
 }

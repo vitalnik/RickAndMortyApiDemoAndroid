@@ -11,7 +11,8 @@ import com.example.rickandmorty.CHARACTER_SCREEN_ROUTE
 import com.example.rickandmorty.EPISODE_SCREEN_ROUTE
 import com.example.rickandmorty.HOME_SCREEN_ROUTE
 import com.example.rickandmorty.LOCATION_SCREEN_ROUTE
-import com.example.rickandmorty.app.network.dto.CharacterDTO
+import com.example.rickandmorty.app.data.dto.CharacterDto
+import com.example.rickandmorty.app.data.dto.toDomain
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -41,8 +42,8 @@ fun NavGraphBuilder.characterScreen(
                 if (characterJson.isEmpty()) {
                     throw IllegalArgumentException()
                 }
-                val character = Json.decodeFromString<CharacterDTO>(characterJson)
-                viewModel.setCharacter(character)
+                val character = Json.decodeFromString<CharacterDto>(characterJson)
+                viewModel.setCharacter(character.toDomain())
             } catch (e: Exception) {
                 characterId?.let {
                     viewModel.getCharacter(characterId = it)

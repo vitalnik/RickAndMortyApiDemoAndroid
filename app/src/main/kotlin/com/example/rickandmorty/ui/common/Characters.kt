@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.CharacterDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.ui.components.DividerLine
 import com.example.rickandmorty.ui.components.HorizontalSpacer
 import com.example.rickandmorty.ui.components.VerticalSpacer
@@ -37,8 +37,8 @@ fun CharactersListHeader(headerTextId: Int, charactersCount: Int) {
 }
 
 fun LazyListScope.charactersList(
-    characters: List<CharacterDTO>,
-    onNavigateToCharacter: (character: CharacterDTO) -> Unit
+    characters: List<CharacterModel>,
+    onNavigateToCharacter: (character: CharacterModel) -> Unit
 ) {
     items(items = characters, key = {
         it.id
@@ -55,7 +55,7 @@ fun LazyListScope.charactersList(
 
 @Composable
 private fun CharacterCard(
-    character: CharacterDTO,
+    character: CharacterModel,
     onNavigateToCharacter: () -> Unit
 ) {
     ElevatedCard(modifier = Modifier
@@ -70,7 +70,7 @@ private fun CharacterCard(
 
             Row {
 
-                CharacterImage(imageUrl = character.image, size = 80.dp)
+                CharacterImage(imageUrl = character.imageUrl, size = 80.dp)
 
                 HorizontalSpacer()
 
@@ -94,7 +94,7 @@ private fun CharacterCard(
                     Text(
                         text = stringResource(
                             id = R.string.appears_in_episodes,
-                            character.episode.count()
+                            character.episodeIds.count()
                         ),
                         style = MaterialTheme.typography.labelLarge
                     )

@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.CharacterDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.Status
 import com.example.rickandmorty.ui.common.CharacterImage
 import com.example.rickandmorty.ui.common.OriginAndLocation
 import com.example.rickandmorty.ui.common.SearchPanel
@@ -24,7 +25,7 @@ import rememberLazyListState
 
 @Composable
 fun CharactersScreen(
-    pagingItems: LazyPagingItems<CharacterDTO>,
+    pagingItems: LazyPagingItems<CharacterModel>,
     isLoading: Boolean = false,
     isEmpty: Boolean = false,
     alertDialogVisible: Boolean = false,
@@ -34,7 +35,7 @@ fun CharactersScreen(
     onSearchValueChange: (value: String) -> Unit = {},
     onRetry: () -> Unit = {},
     onDismiss: () -> Unit = {},
-    onNavigateToCharacter: (character: CharacterDTO) -> Unit = {},
+    onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
     onBackPress: () -> Unit = {}
 ) {
 
@@ -126,8 +127,8 @@ fun CharactersScreen(
 
 @Composable
 private fun CharacterCard(
-    character: CharacterDTO,
-    onNavigateToCharacter: (character: CharacterDTO) -> Unit
+    character: CharacterModel,
+    onNavigateToCharacter: (character: CharacterModel) -> Unit
 ) {
     ElevatedCard(modifier = Modifier
         .fillMaxWidth()
@@ -143,12 +144,15 @@ private fun CharacterCard(
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    CharacterImage(imageUrl = character.image)
+                    CharacterImage(imageUrl = character.imageUrl)
 
                     VerticalSpacer(8.dp)
 
-                    if (character.status != "unknown") {
-                        Text(text = character.status, style = MaterialTheme.typography.labelLarge)
+                    if (character.status != Status.UNKNOWN) {
+                        Text(
+                            text = character.status.toString(),
+                            style = MaterialTheme.typography.labelLarge
+                        )
                     }
                 }
 
@@ -172,7 +176,7 @@ private fun CharacterCard(
                     Text(
                         text = stringResource(
                             id = R.string.appears_in_episodes,
-                            character.episode.count()
+                            character.episodeIds.count()
                         ),
                         style = MaterialTheme.typography.labelLarge
                     )

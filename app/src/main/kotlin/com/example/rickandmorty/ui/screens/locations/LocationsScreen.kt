@@ -17,17 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.LocationDTO
+import com.example.rickandmorty.app.domain.models.LocationModel
 import com.example.rickandmorty.ui.common.LocationCard
 import com.example.rickandmorty.ui.common.SearchPanel
 import com.example.rickandmorty.ui.components.*
-import com.example.rickandmorty.ui.preview.LocationPreviewProvider
+import com.example.rickandmorty.ui.preview.LocationsPreviewProvider
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 import rememberLazyListState
 
 @Composable
 fun LocationsScreen(
-    pagingItems: LazyPagingItems<LocationDTO>,
+    pagingItems: LazyPagingItems<LocationModel>,
     isLoading: Boolean = false,
     isEmpty: Boolean = false,
     alertDialogVisible: Boolean = false,
@@ -115,6 +115,6 @@ fun LocationsScreen(
 @Composable
 fun LocationCardPreview() {
     RickAndMortyTheme {
-        LocationCard(location = LocationPreviewProvider().values.first())
+        LocationCard(location = LocationsPreviewProvider().values.first())
     }
 }

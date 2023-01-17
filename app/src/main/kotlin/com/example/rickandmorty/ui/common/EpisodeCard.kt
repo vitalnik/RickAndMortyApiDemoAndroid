@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.EpisodeDTO
+import com.example.rickandmorty.app.domain.models.EpisodeModel
 import com.example.rickandmorty.ui.components.DividerLine
 import com.example.rickandmorty.ui.components.VerticalSpacer
 
 @Composable
 fun EpisodeCard(
-    episode: EpisodeDTO,
+    episode: EpisodeModel,
     onNavigateToEpisode: () -> Unit
 ) {
     ElevatedCard(modifier = Modifier
@@ -28,9 +28,9 @@ fun EpisodeCard(
         Column(modifier = Modifier.padding(all = 16.dp)) {
 
             Row {
-                Text(text = episode.air_date, style = MaterialTheme.typography.titleSmall)
+                Text(text = episode.airDate, style = MaterialTheme.typography.titleSmall)
                 Spacer(Modifier.weight(1f, true))
-                Text(text = episode.episode, style = MaterialTheme.typography.titleSmall)
+                Text(text = episode.episodeCode, style = MaterialTheme.typography.titleSmall)
             }
 
             VerticalSpacer(4.dp)
@@ -46,7 +46,7 @@ fun EpisodeCard(
             Text(
                 text = stringResource(
                     id = R.string.number_of_characters,
-                    episode.characters.count()
+                    episode.characterIds.count()
                 ),
                 style = MaterialTheme.typography.labelMedium
             )

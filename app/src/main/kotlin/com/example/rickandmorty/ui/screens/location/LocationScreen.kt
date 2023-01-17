@@ -12,22 +12,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.CharacterDTO
-import com.example.rickandmorty.app.network.dto.LocationDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
+import com.example.rickandmorty.app.domain.models.LocationModel
 import com.example.rickandmorty.app.utils.ViewState
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.ui.common.CharactersListHeader
 import com.example.rickandmorty.ui.common.charactersList
 import com.example.rickandmorty.ui.components.*
-import com.example.rickandmorty.ui.preview.CharacterPreviewProvider
-import com.example.rickandmorty.ui.preview.LocationPreviewProvider
+import com.example.rickandmorty.ui.preview.CharactersPreviewProvider
+import com.example.rickandmorty.ui.preview.LocationsPreviewProvider
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 
 @Composable
 fun LocationScreen(
-    locationState: ViewState<LocationDTO>,
-    charactersState: ViewState<List<CharacterDTO>>,
-    onNavigateToCharacter: (character: CharacterDTO) -> Unit = {},
+    locationState: ViewState<LocationModel>,
+    charactersState: ViewState<List<CharacterModel>>,
+    onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
     onBackPress: () -> Unit = {},
     onNavigateHome: () -> Unit = {},
 ) {
@@ -110,7 +110,7 @@ fun LocationScreen(
 }
 
 @Composable
-private fun LocationHeader(location: LocationDTO) {
+private fun LocationHeader(location: LocationModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,7 +122,7 @@ private fun LocationHeader(location: LocationDTO) {
 }
 
 @Composable
-private fun LocationSubHeader(location: LocationDTO) {
+private fun LocationSubHeader(location: LocationModel) {
     Column {
         Text(
             text = stringResource(id = R.string.dimension),
@@ -142,14 +142,13 @@ private fun LocationSubHeader(location: LocationDTO) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun LocationScreenPreview() {
     RickAndMortyTheme {
         LocationScreen(
-            locationState = ViewState.Populated(LocationPreviewProvider().values.first()),
-            charactersState = ViewState.Populated(CharacterPreviewProvider().values.toList())
+            locationState = ViewState.Populated(LocationsPreviewProvider().values.first()),
+            charactersState = ViewState.Populated(CharactersPreviewProvider().values.toList())
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rickandmorty.app.extensions
+package com.example.rickandmorty.app.utils.extensions
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

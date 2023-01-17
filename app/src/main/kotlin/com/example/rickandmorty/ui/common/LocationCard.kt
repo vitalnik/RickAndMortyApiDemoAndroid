@@ -13,15 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.LocationDTO
+import com.example.rickandmorty.app.domain.models.LocationModel
 import com.example.rickandmorty.ui.components.DividerLine
 import com.example.rickandmorty.ui.components.VerticalSpacer
-import com.example.rickandmorty.ui.preview.LocationPreviewProvider
+import com.example.rickandmorty.ui.preview.LocationsPreviewProvider
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 
 @Composable
 fun LocationCard(
-    location: LocationDTO,
+    location: LocationModel,
     onNavigateToLocation: (() -> Unit)? = null
 ) {
     ElevatedCard(modifier = Modifier
@@ -67,7 +67,7 @@ fun LocationCard(
             Text(
                 text = stringResource(
                     id = R.string.number_of_residents,
-                    location.residents.count()
+                    location.residentIds.count()
                 ),
                 style = MaterialTheme.typography.labelMedium
             )
@@ -79,6 +79,6 @@ fun LocationCard(
 @Composable
 fun LocationCardPreview() {
     RickAndMortyTheme {
-        LocationCard(location = LocationPreviewProvider().values.elementAt(2))
+        LocationCard(location = LocationsPreviewProvider().values.elementAt(2))
     }
 }

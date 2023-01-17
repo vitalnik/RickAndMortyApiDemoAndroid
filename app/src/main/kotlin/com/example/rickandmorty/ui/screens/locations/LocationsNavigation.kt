@@ -2,7 +2,6 @@ package com.example.rickandmorty.ui.screens.locations
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -25,7 +24,7 @@ fun NavGraphBuilder.locationsScreen(
         val scope = rememberCoroutineScope()
         var refreshJob by remember { mutableStateOf<Job?>(Job()) }
 
-        val viewModel = hiltViewModel<LocationsViewModel>()
+        //val viewModel = hiltViewModel<LocationsViewModel>()
 
         val pagingItems = mainViewModel.locationsPagingData.collectAsLazyPagingItems()
 

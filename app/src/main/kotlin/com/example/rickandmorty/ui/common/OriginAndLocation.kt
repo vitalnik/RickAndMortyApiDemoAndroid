@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
-import com.example.rickandmorty.app.network.dto.CharacterDTO
+import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.ui.components.VerticalSpacer
 
 @Composable
-fun OriginAndLocation(character: CharacterDTO) {
+fun OriginAndLocation(character: CharacterModel) {
     Column {
         Text(
             text = stringResource(id = R.string.origin),
