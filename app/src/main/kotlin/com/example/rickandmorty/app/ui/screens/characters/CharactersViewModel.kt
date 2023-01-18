@@ -1,5 +1,6 @@
 package com.example.rickandmorty.app.ui.screens.characters
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,14 +10,15 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor() :
     ViewModel() {
 
-    val searchPanelVisible = mutableStateOf(false)
+    private val _searchPanelVisible = mutableStateOf(false)
+    val searchPanelVisible: State<Boolean> = _searchPanelVisible
 
     fun showSearchPanel() {
-        searchPanelVisible.value = true
+        _searchPanelVisible.value = true
     }
 
     fun hideSearchPanel() {
-        searchPanelVisible.value = false
+        _searchPanelVisible.value = false
     }
 
 }

@@ -10,6 +10,7 @@ import com.example.rickandmorty.domain.usecases.character.GetCharactersByIdsUseC
 import com.example.rickandmorty.domain.usecases.location.GetLocationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,40 +21,43 @@ class LocationViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    var locationFlow = MutableStateFlow<ViewState<LocationModel>>(ViewState.Initial)
+    private var _locationFlow = MutableStateFlow<ViewState<LocationModel>>(ViewState.Initial)
+    var locationFlow: StateFlow<ViewState<LocationModel>> = _locationFlow
 
-    var charactersFlow = MutableStateFlow<ViewState<List<CharacterModel>>>(ViewState.Initial)
+    private var _charactersFlow =
+        MutableStateFlow<ViewState<List<CharacterModel>>>(ViewState.Initial)
+    var charactersFlow: StateFlow<ViewState<List<CharacterModel>>> = _charactersFlow
 
     fun getLocation(locationId: Int) {
 
         viewModelScope.launch {
 
-            locationFlow.emit(ViewState.Loading)
+            _locationFlow.emit(ViewState.Loading)
 
             kotlin.runCatching {
                 getLocationUseCase(id = locationId)
 
             }.onSuccess {
-                locationFlow.emit(ViewState.Populated(it))
+                _locationFlow.emit(ViewState.Populated(it))
                 if (it.residentIds.isNotEmpty()) {
                     getCharacters(it.residentIds)
                 } else {
-                    charactersFlow.emit(ViewState.Populated(listOf()))
+                    _charactersFlow.emit(ViewState.Populated(listOf()))
                 }
             }.onFailure {
-                locationFlow.emit(ViewState.Error(errorMessage = "Error loading location"))
+                _locationFlow.emit(ViewState.Error(errorMessage = "Error loading location"))
             }
         }
     }
 
     private suspend fun getCharacters(characterIds: List<Int>) {
-        charactersFlow.emit(ViewState.Loading)
+        _charactersFlow.emit(ViewState.Loading)
         kotlin.runCatching {
             getCharactersByIdsUseCase(characterIds.idsQuery())
         }.onSuccess {
-            charactersFlow.emit(ViewState.Populated(it))
+            _charactersFlow.emit(ViewState.Populated(it))
         }.onFailure {
-            charactersFlow.emit(ViewState.Error(errorMessage = "Error loading characters"))
+            _charactersFlow.emit(ViewState.Error(errorMessage = "Error loading characters"))
         }
     }
 }
