@@ -10,9 +10,7 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class EpisodeRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
 ) : EpisodeRepository {
