@@ -1,9 +1,9 @@
-package com.example.rickandmorty.app.data.dto
+package com.example.rickandmorty.app.data.network.dto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InfoDto(
+internal data class InfoDto(
     val count: Int,
     val next: String?,
     val pages: Int,

@@ -2,10 +2,10 @@ package com.example.rickandmorty.ui.screens.character
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.app.data.repositories.CharactersRepository
-import com.example.rickandmorty.app.data.repositories.EpisodesRepository
 import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.app.domain.models.EpisodeModel
+import com.example.rickandmorty.app.domain.usecases.character.GetCharacterUseCase
+import com.example.rickandmorty.app.domain.usecases.episode.GetEpisodesByIdsUseCase
 import com.example.rickandmorty.app.utils.ViewState
 import com.example.rickandmorty.app.utils.extensions.idsQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val charactersRepo: CharactersRepository,
-    private val episodesRepo: EpisodesRepository,
+    private val getCharacterUseCase: GetCharacterUseCase,
+    private val getEpisodesByIdsUseCase: GetEpisodesByIdsUseCase,
 ) :
     ViewModel() {
 
@@ -31,7 +31,7 @@ class CharacterViewModel @Inject constructor(
             characterFlow.emit(ViewState.Loading)
 
             runCatching {
-                charactersRepo.getCharacter(characterId = characterId)
+                getCharacterUseCase(characterId = characterId)
             }.onSuccess {
                 characterFlow.emit(ViewState.Populated(it))
                 getEpisodes(it.episodeIds)
@@ -51,7 +51,7 @@ class CharacterViewModel @Inject constructor(
     private suspend fun getEpisodes(episodeUrls: List<Int>) {
         episodesFlow.emit(ViewState.Loading)
         runCatching {
-            episodesRepo.getEpisodesByIds(episodeUrls.idsQuery())
+            getEpisodesByIdsUseCase(episodeUrls.idsQuery())
         }.onSuccess {
             episodesFlow.emit(ViewState.Populated(it))
         }.onFailure {

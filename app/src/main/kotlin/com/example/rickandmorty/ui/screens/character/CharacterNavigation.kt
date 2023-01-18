@@ -11,8 +11,8 @@ import com.example.rickandmorty.CHARACTER_SCREEN_ROUTE
 import com.example.rickandmorty.EPISODE_SCREEN_ROUTE
 import com.example.rickandmorty.HOME_SCREEN_ROUTE
 import com.example.rickandmorty.LOCATION_SCREEN_ROUTE
-import com.example.rickandmorty.app.data.dto.CharacterDto
-import com.example.rickandmorty.app.data.dto.toDomain
+import com.example.rickandmorty.app.data.network.dto.CharacterDto
+import com.example.rickandmorty.app.data.network.dto.toDomain
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

@@ -1,6 +1,5 @@
 package com.example.rickandmorty.app.domain.models
 
-import com.example.rickandmorty.app.data.dto.LinkDto
 import kotlinx.serialization.Serializable
 
 enum class Status {
@@ -24,8 +23,8 @@ data class CharacterModel(
     val species: String,
     val status: Status,
     val type: String,
-    val origin: LinkDto,
-    val location: LinkDto,
+    val origin: LinkModel,
+    val location: LinkModel,
     val imageUrl: String,
     val episodeIds: List<Int>,
 )

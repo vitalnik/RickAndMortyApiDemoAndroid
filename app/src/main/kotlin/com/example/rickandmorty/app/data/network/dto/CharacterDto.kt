@@ -1,4 +1,4 @@
-package com.example.rickandmorty.app.data.dto
+package com.example.rickandmorty.app.data.network.dto
 
 import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.app.domain.models.Status.Companion.getStatus
@@ -6,7 +6,7 @@ import com.example.rickandmorty.app.utils.extensions.idsList
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CharacterDto(
+internal data class CharacterDto(
     val id: Int,
     val name: String,
     val gender: String,
@@ -21,7 +21,7 @@ data class CharacterDto(
     val created: String,
 )
 
-fun CharacterDto.toDomain() = CharacterModel(
+internal fun CharacterDto.toDomain() = CharacterModel(
     id = this.id,
     name = this.name,
     gender = this.gender,
@@ -29,7 +29,7 @@ fun CharacterDto.toDomain() = CharacterModel(
     status = this.status.getStatus(),
     type = this.type,
     imageUrl = this.image,
-    origin = this.origin,
-    location = this.location,
+    origin = this.location.toDomain(),
+    location = this.location.toDomain(),
     episodeIds = this.episode.idsList(),
 )

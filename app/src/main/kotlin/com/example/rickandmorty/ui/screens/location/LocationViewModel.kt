@@ -2,10 +2,10 @@ package com.example.rickandmorty.ui.screens.location
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.app.data.repositories.CharactersRepository
-import com.example.rickandmorty.app.data.repositories.LocationsRepository
 import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.app.domain.models.LocationModel
+import com.example.rickandmorty.app.domain.usecases.character.GetCharactersByIdsUseCase
+import com.example.rickandmorty.app.domain.usecases.location.GetLocationUseCase
 import com.example.rickandmorty.app.utils.ViewState
 import com.example.rickandmorty.app.utils.extensions.idsQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
-    private val locationRepo: LocationsRepository,
-    private val charactersRepo: CharactersRepository,
+    private val getLocationUseCase: GetLocationUseCase,
+    private val getCharactersByIdsUseCase: GetCharactersByIdsUseCase,
 ) :
     ViewModel() {
 
@@ -31,7 +31,7 @@ class LocationViewModel @Inject constructor(
             locationFlow.emit(ViewState.Loading)
 
             kotlin.runCatching {
-                locationRepo.getLocation(locationId = locationId)
+                getLocationUseCase(id = locationId)
 
             }.onSuccess {
                 locationFlow.emit(ViewState.Populated(it))
@@ -49,7 +49,7 @@ class LocationViewModel @Inject constructor(
     private suspend fun getCharacters(characterIds: List<Int>) {
         charactersFlow.emit(ViewState.Loading)
         kotlin.runCatching {
-            charactersRepo.getCharactersByIds(characterIds.idsQuery())
+            getCharactersByIdsUseCase(characterIds.idsQuery())
         }.onSuccess {
             charactersFlow.emit(ViewState.Populated(it))
         }.onFailure {

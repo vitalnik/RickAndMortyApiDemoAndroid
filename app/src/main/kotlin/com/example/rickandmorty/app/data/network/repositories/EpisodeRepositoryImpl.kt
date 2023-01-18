@@ -1,10 +1,11 @@
-package com.example.rickandmorty.app.data.repositories
+package com.example.rickandmorty.app.data.network.repositories
 
-import com.example.rickandmorty.app.data.dto.EpisodeDto
-import com.example.rickandmorty.app.data.dto.EpisodesDto
-import com.example.rickandmorty.app.data.dto.toDomain
 import com.example.rickandmorty.app.data.network.NetworkClient
+import com.example.rickandmorty.app.data.network.dto.EpisodeDto
+import com.example.rickandmorty.app.data.network.dto.EpisodesDto
+import com.example.rickandmorty.app.data.network.dto.toDomain
 import com.example.rickandmorty.app.domain.models.EpisodeModel
+import com.example.rickandmorty.app.domain.repositories.EpisodeRepository
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -12,11 +13,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EpisodesRepository @Inject constructor(
+class EpisodeRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
-) {
+) : EpisodeRepository {
 
-    suspend fun getEpisodes(pageIndex: Int): List<EpisodeModel> {
+    override suspend fun getEpisodes(pageIndex: Int): List<EpisodeModel> {
         val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex"
         return try {
             val response = networkClient.client.get<EpisodesDto> {
@@ -31,7 +32,7 @@ class EpisodesRepository @Inject constructor(
         }
     }
 
-    suspend fun getEpisode(episodeId: Int): EpisodeModel {
+    override suspend fun getEpisode(episodeId: Int): EpisodeModel {
         val url = "${NetworkClient.BASE_URL}/episode/$episodeId"
         val response = networkClient.client.get<EpisodeDto> {
             url(url)
@@ -40,9 +41,9 @@ class EpisodesRepository @Inject constructor(
         return response.toDomain()
     }
 
-    suspend fun getEpisodesByIds(episodesIds: String): List<EpisodeModel> {
-        val url = "${NetworkClient.BASE_URL}/episode/$episodesIds"
-        return if (episodesIds.contains(",")) {
+    override suspend fun getEpisodesByIds(episodeIds: String): List<EpisodeModel> {
+        val url = "${NetworkClient.BASE_URL}/episode/$episodeIds"
+        return if (episodeIds.contains(",")) {
             networkClient.client.get<List<EpisodeDto>> {
                 url(url)
                 contentType(ContentType.Application.Json)

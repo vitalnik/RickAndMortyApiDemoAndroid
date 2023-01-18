@@ -4,21 +4,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.example.rickandmorty.app.data.repositories.CharactersRepository
-import com.example.rickandmorty.app.data.repositories.EpisodesRepository
-import com.example.rickandmorty.app.data.repositories.LocationsRepository
 import com.example.rickandmorty.app.domain.models.CharacterModel
 import com.example.rickandmorty.app.domain.models.EpisodeModel
 import com.example.rickandmorty.app.domain.models.LocationModel
+import com.example.rickandmorty.app.domain.usecases.character.GetCharactersUseCase
+import com.example.rickandmorty.app.domain.usecases.episode.GetEpisodesUseCase
+import com.example.rickandmorty.app.domain.usecases.location.GetLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val charactersRepo: CharactersRepository,
-    private val locationsRepo: LocationsRepository,
-    private val episodesRepo: EpisodesRepository,
+    private val getCharactersUseCase: GetCharactersUseCase,
+    private val getLocationsUseCase: GetLocationsUseCase,
+    private val getEpisodesUseCase: GetEpisodesUseCase,
 ) :
     ViewModel() {
 
@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
                 val searchQuery =
                     if (characterNameSearchValue.value.isNotEmpty()) "&name=${characterNameSearchValue.value}" else ""
 
-                charactersRepo.getCharacters(it, searchQuery)
+                getCharactersUseCase(it, searchQuery)
             })
         },
         config = PagingConfig(pageSize = 20)
@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(
                 val searchQuery =
                     if (locationNameSearchValue.value.isNotEmpty()) "&name=${locationNameSearchValue.value}" else ""
 
-                locationsRepo.getLocations(it, searchQuery)
+                getLocationsUseCase(it, searchQuery)
             })
         },
         config = PagingConfig(pageSize = 20)
@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(
     val episodesPagingData: Flow<PagingData<EpisodeModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
-                episodesRepo.getEpisodes(it)
+                getEpisodesUseCase(it)
             })
         },
         config = PagingConfig(pageSize = 20)
