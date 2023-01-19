@@ -42,15 +42,34 @@ As of Jan 14, 2023 it's Electric Eel 2022.1.1
 
 ## App Architecture
 
-The application is designed using Jetpack Compose and custom version of MVVM architecture.
+The application is designed using Jetpack Compose and custom version of MVVM & Clean Architecture.
 <br>
 <br>
 The basic data flow can be represented by this idea:
 <br>
 
 ```
-Composable UI <-> ViewModel <-> Repository <-> NetworkClient  
+Composable UI <-> ViewModel <-> UseCase <-> Repository <-> NetworkClient  
 ```
+
+The contains 3 main layers (packages):
+
+<br>
+
+- app or presentation layer
+  - dependency injection setup
+  - composable ui
+  - view models
+  - utils
+- domain layer
+  - models
+  - use cases
+  - repository interfaces
+- data layer
+  - data transfer objects, DTOs
+  - repository implementations
+  - network client
+  - analytics
 
 <br>
 <br>
@@ -58,8 +77,10 @@ Composable UI <-> ViewModel <-> Repository <-> NetworkClient
 ## Architecture decisions
 
 - each composable screen has a corresponding ViewModel and Navigation component
-- MainViewModel is responsible for loading and caching paged data for Characters, Locations and Episodes
-- for minimizing the number of individual API requests we use Ktor's Http cache, requests are cached in-memory based on 'Cache-Control' header provided by the API
+- MainViewModel is responsible for loading and caching paged data for Characters, Locations and
+  Episodes
+- for minimizing the number of individual API requests we use Ktor's Http cache, requests are cached
+  in-memory based on 'Cache-Control' header provided by the API
 - for deserializing API responses we use Kotlin Serialization
 - using raw JSON strings for producing PreviewParameterProvider's sequences
 - the navigation between characters, locations and episodes is done by clicking on corresponding
