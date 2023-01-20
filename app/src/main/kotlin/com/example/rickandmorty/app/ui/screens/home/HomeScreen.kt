@@ -9,9 +9,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.components.HomeButton
+import com.example.rickandmorty.app.ui.components.SystemBarsColor
 import com.example.rickandmorty.app.ui.components.VerticalSpacer
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 
@@ -22,7 +22,14 @@ fun HomeScreen(
     onNavigateToCharacters: () -> Unit = {},
 ) {
 
-    Box {
+    // background image is kinds dark, use light icons
+    SystemBarsColor(useDarkIcons = false)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+
         Image(
             painter = painterResource(id = R.drawable.rickandmorty),
             contentDescription = stringResource(id = R.string.app_name),
@@ -32,11 +39,11 @@ fun HomeScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 16.dp),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
             Spacer(
                 modifier = Modifier.weight(5f, true)
             )

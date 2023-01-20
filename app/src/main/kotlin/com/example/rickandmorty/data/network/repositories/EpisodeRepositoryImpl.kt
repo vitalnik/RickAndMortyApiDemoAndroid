@@ -15,8 +15,8 @@ class EpisodeRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
 ) : EpisodeRepository {
 
-    override suspend fun getEpisodes(pageIndex: Int): List<EpisodeModel> {
-        val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex"
+    override suspend fun getEpisodes(pageIndex: Int, searchQuery: String): List<EpisodeModel> {
+        val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex$searchQuery"
         return try {
             val response = networkClient.client.get<EpisodesDto> {
                 url(url)

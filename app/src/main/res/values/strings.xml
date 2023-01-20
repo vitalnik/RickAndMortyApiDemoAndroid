@@ -43,5 +43,8 @@
     <string name="no_locations_found">No locations found</string>
     <string name="no_episodes_found">No episodes found</string>
 
+    <string name="all_locations_loaded">All locations loaded</string>
+    <string name="all_episodes_loaded">All episodes loaded</string>
+
 
 </resources>

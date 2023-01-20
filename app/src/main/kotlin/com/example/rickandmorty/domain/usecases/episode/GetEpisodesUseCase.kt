@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetEpisodesUseCase @Inject constructor(private val repo: EpisodeRepository) {
 
-    suspend operator fun invoke(pageIndex: Int): List<EpisodeModel> {
-        return repo.getEpisodes(pageIndex = pageIndex)
+    suspend operator fun invoke(pageIndex: Int, searchQuery: String): List<EpisodeModel> {
+        return repo.getEpisodes(pageIndex = pageIndex, searchQuery = searchQuery)
     }
 
 }

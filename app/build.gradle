@@ -91,6 +91,13 @@ dependencies {
 
     implementation "androidx.paging:paging-compose:1.0.0-alpha17"
 
+    // lifecycle support
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0-alpha04"
+
     // Hilt
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
@@ -111,6 +118,7 @@ dependencies {
 
     // accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
     // testing
     testImplementation 'junit:junit:4.13.2'

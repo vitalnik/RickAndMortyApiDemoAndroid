@@ -2,6 +2,7 @@ package com.example.rickandmorty.app.ui.screens.locations
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -20,6 +21,8 @@ fun NavGraphBuilder.locationsScreen(
 ) {
 
     composable(route = LOCATIONS_SCREEN_ROUTE) {
+
+        val context = LocalContext.current
 
         val scope = rememberCoroutineScope()
         var refreshJob by remember { mutableStateOf<Job?>(Job()) }
@@ -56,6 +59,16 @@ fun NavGraphBuilder.locationsScreen(
                 !isLoading && pagingItems.itemCount == 0
             }
         }
+
+//        LaunchedEffect(key1 = pagingItems.loadState.append) {
+//            if (pagingItems.loadState.append.endOfPaginationReached) {
+//                Toast.makeText(
+//                    context,
+//                    context.getString(R.string.all_locations_loaded),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
 
         LocationsScreen(
             pagingItems = pagingItems,

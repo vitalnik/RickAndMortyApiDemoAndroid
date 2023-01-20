@@ -1,9 +1,9 @@
 package com.example.rickandmorty.app.ui.screens.location
 
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
@@ -26,8 +26,8 @@ fun NavGraphBuilder.locationScreen(
 
         val viewModel = hiltViewModel<LocationViewModel>()
 
-        val locationState by viewModel.locationFlow.collectAsState()
-        val charactersState by viewModel.charactersFlow.collectAsState()
+        val locationState by viewModel.locationFlow.collectAsStateWithLifecycle()
+        val charactersState by viewModel.charactersFlow.collectAsStateWithLifecycle()
 
         val locationId = backStackEntry.arguments?.getInt("locationId", 1)
 

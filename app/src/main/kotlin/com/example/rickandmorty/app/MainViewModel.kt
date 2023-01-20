@@ -52,10 +52,16 @@ class MainViewModel @Inject constructor(
         config = PagingConfig(pageSize = 20)
     ).flow.cachedIn(viewModelScope)
 
+    val episodeSearchValue = mutableStateOf("")
+
     val episodesPagingData: Flow<PagingData<EpisodeModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
-                getEpisodesUseCase(it)
+
+                val searchQuery =
+                    if (episodeSearchValue.value.isNotEmpty()) "&episode=${episodeSearchValue.value}" else ""
+
+                getEpisodesUseCase(it, searchQuery)
             })
         },
         config = PagingConfig(pageSize = 20)

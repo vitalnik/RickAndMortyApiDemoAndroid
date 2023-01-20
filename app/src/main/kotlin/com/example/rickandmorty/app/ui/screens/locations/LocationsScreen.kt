@@ -39,6 +39,8 @@ fun LocationsScreen(
     onBackPress: () -> Unit = {}
 ) {
 
+    SystemBarsColor()
+
     val listState = pagingItems.rememberLazyListState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -46,8 +48,10 @@ fun LocationsScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            TopAppBar(title = {
-                TopAppBarRow(title = stringResource(id = R.string.locations),
+            TopAppBar(
+                title = {
+                    TopAppBarRow(
+                        title = stringResource(id = R.string.locations),
                     icon1 = R.drawable.ic_refresh,
                     onIcon1Click = {
                         onRetry()

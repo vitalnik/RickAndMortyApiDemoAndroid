@@ -1,5 +1,6 @@
 package com.example.rickandmorty.ui.screens.home
 
+import com.example.rickandmorty.app.ui.screens.home.HomeViewModel
 import com.example.rickandmorty.data.analytics.AnalyticsManager
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

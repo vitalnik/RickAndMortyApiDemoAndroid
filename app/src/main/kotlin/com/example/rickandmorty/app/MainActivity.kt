@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.rickandmorty.app.ui.screens.character.characterScreen
@@ -28,6 +29,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             val navController = rememberAnimatedNavController()

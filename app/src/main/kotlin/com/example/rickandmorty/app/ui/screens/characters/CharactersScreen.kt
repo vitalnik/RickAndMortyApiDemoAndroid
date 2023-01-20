@@ -38,6 +38,7 @@ fun CharactersScreen(
     onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
     onBackPress: () -> Unit = {}
 ) {
+    SystemBarsColor()
 
     val listState = pagingItems.rememberLazyListState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())

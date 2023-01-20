@@ -1,9 +1,9 @@
 package com.example.rickandmorty.app.ui.screens.character
 
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
@@ -31,8 +31,8 @@ fun NavGraphBuilder.characterScreen(
 
         val viewModel = hiltViewModel<CharacterViewModel>()
 
-        val characterState by viewModel.characterFlow.collectAsState()
-        val episodesState by viewModel.episodesFlow.collectAsState()
+        val characterState by viewModel.characterFlow.collectAsStateWithLifecycle()
+        val episodesState by viewModel.episodesFlow.collectAsStateWithLifecycle()
 
         val characterJson = backStackEntry.arguments?.getString("character") ?: ""
         val characterId = backStackEntry.arguments?.getInt("characterId", 1)
