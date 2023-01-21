@@ -14,6 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+const val firstPageIndex = 1
+const val pageSize = 20
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
@@ -34,7 +37,7 @@ class MainViewModel @Inject constructor(
                 getCharactersUseCase(it, searchQuery)
             })
         },
-        config = PagingConfig(pageSize = 20)
+        config = PagingConfig(pageSize = pageSize)
     ).flow.cachedIn(viewModelScope)
 
     val locationNameSearchValue = mutableStateOf("")
@@ -49,7 +52,7 @@ class MainViewModel @Inject constructor(
                 getLocationsUseCase(it, searchQuery)
             })
         },
-        config = PagingConfig(pageSize = 20)
+        config = PagingConfig(pageSize = pageSize)
     ).flow.cachedIn(viewModelScope)
 
     val episodeSearchValue = mutableStateOf("")
@@ -64,7 +67,7 @@ class MainViewModel @Inject constructor(
                 getEpisodesUseCase(it, searchQuery)
             })
         },
-        config = PagingConfig(pageSize = 20)
+        config = PagingConfig(pageSize = pageSize)
     ).flow.cachedIn(viewModelScope)
 
 }
@@ -80,11 +83,11 @@ class CustomPagingSource<T : Any>(private val dataProvider: suspend (pageNumber:
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         return try {
-            val pageNumber = params.key ?: 1
+            val pageNumber = params.key ?: firstPageIndex
             val response = dataProvider.invoke(pageNumber)
-            val prevKey = if (pageNumber > 1) pageNumber - 1 else null
+            val prevKey = if (pageNumber > firstPageIndex) pageNumber - 1 else null
             val nextKey =
-                if (response.isNotEmpty() && response.count() == 20) pageNumber + 1 else null
+                if (response.isNotEmpty() && response.count() == pageSize) pageNumber + 1 else null
 
             LoadResult.Page(
                 data = response,

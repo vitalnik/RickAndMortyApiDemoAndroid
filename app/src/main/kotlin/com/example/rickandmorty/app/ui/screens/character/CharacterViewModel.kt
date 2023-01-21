@@ -39,7 +39,7 @@ class CharacterViewModel @Inject constructor(
                 _characterFlow.emit(ViewState.Populated(it))
                 getEpisodes(it.episodeIds)
             }.onFailure {
-                _characterFlow.emit(ViewState.Error(errorMessage = "Error loading character."))
+                _characterFlow.emit(ViewState.Error(errorCode = "error_loading_character"))
             }
         }
     }
@@ -58,7 +58,7 @@ class CharacterViewModel @Inject constructor(
         }.onSuccess {
             _episodesFlow.emit(ViewState.Populated(it))
         }.onFailure {
-            _episodesFlow.emit(ViewState.Error(errorMessage = "Error loading episodes."))
+            _episodesFlow.emit(ViewState.Error(errorCode = "error_loading_episodes"))
         }
     }
 }

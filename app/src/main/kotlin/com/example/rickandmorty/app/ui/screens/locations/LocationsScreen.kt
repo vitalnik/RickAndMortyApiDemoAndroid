@@ -40,7 +40,7 @@ fun LocationsScreen(
     onBackPress: () -> Unit = {}
 ) {
 
-    SystemBarsColor()
+    SetSystemBarsColor()
 
     val listState = pagingItems.rememberLazyListState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())

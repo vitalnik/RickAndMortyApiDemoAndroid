@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun SystemBarsColor(useDarkIcons: Boolean = !isSystemInDarkTheme()) {
+fun SetSystemBarsColor(useDarkIcons: Boolean = !isSystemInDarkTheme()) {
     val systemUiController = rememberSystemUiController()
     DisposableEffect(systemUiController, useDarkIcons) {
         systemUiController.setSystemBarsColor(

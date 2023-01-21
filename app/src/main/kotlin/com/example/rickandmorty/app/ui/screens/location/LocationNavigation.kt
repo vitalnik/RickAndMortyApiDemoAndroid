@@ -18,7 +18,7 @@ fun NavGraphBuilder.locationScreen(
 
     composable(
         route = Screen.Location.route, arguments = listOf(
-            navArgument("locationId") { defaultValue = 1 },
+            navArgument(Screen.Location.locationId) { defaultValue = 1 },
         )
     ) { backStackEntry ->
 
@@ -27,12 +27,16 @@ fun NavGraphBuilder.locationScreen(
         val locationState by viewModel.locationFlow.collectAsStateWithLifecycle()
         val charactersState by viewModel.charactersFlow.collectAsStateWithLifecycle()
 
-        val locationId = backStackEntry.arguments?.getInt("locationId", 1)
+        val locationId = backStackEntry.arguments?.getInt(Screen.Location.locationId, 1)
 
-        LaunchedEffect(key1 = locationId) {
+        fun loadLocation() {
             locationId?.let {
                 viewModel.getLocation(locationId = it)
             }
+        }
+
+        LaunchedEffect(key1 = locationId) {
+            loadLocation()
         }
 
         LocationScreen(
@@ -46,6 +50,9 @@ fun NavGraphBuilder.locationScreen(
                         characterJson
                     )
                 )
+            },
+            onRetry = {
+                loadLocation()
             },
             onBackPress = {
                 navController.popBackStack()

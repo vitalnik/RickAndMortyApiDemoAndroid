@@ -29,12 +29,17 @@
     <string name="number_of_characters">Number of characters: %1$d</string>
 
     <string name="error_loading_characters">There was an error loading characters. Please try again.</string>
+    <string name="error_loading_character">Error loading character.\nPlease try again.</string>
     <string name="error_loading_locations">There was an error loading locations. Please try again.</string>
+    <string name="error_loading_location">Error loading location.\nPlease try again.</string>
     <string name="error_loading_episodes">There was an error loading episodes. Please try again.</string>
+    <string name="error_loading_episode">Error loading episode.\nPlease try again.</string>
+    <string name="unknown_error">An unknown error has occurred. Please try again.</string>
 
     <string name="oops">Oops</string>
     <string name="cancel">Cancel</string>
     <string name="retry">Retry</string>
+    <string name="try_again">Try again</string>
     <string name="back">Back</string>
     <string name="go_home">Go home</string>
 

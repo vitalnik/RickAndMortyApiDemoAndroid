@@ -21,8 +21,8 @@ fun NavGraphBuilder.characterScreen(
     composable(
         route = Screen.Character.route,
         arguments = listOf(
-            navArgument("characterJson") { defaultValue = "" },
-            navArgument("characterId") { defaultValue = 1 },
+            navArgument(Screen.Character.characterId) { defaultValue = 1 },
+            navArgument(Screen.Character.characterJson) { defaultValue = "" },
         )
     ) { backStackEntry ->
 
@@ -31,10 +31,11 @@ fun NavGraphBuilder.characterScreen(
         val characterState by viewModel.characterFlow.collectAsStateWithLifecycle()
         val episodesState by viewModel.episodesFlow.collectAsStateWithLifecycle()
 
-        val characterJson = backStackEntry.arguments?.getString("characterJson") ?: ""
-        val characterId = backStackEntry.arguments?.getInt("characterId", 1)
+        val characterId = backStackEntry.arguments?.getInt(Screen.Character.characterId, 1)
+        val characterJson =
+            backStackEntry.arguments?.getString(Screen.Character.characterJson) ?: ""
 
-        LaunchedEffect(key1 = characterId) {
+        fun loadCharacter() {
             try {
                 if (characterJson.isEmpty()) {
                     throw IllegalArgumentException()
@@ -48,6 +49,10 @@ fun NavGraphBuilder.characterScreen(
             }
         }
 
+        LaunchedEffect(key1 = characterId) {
+            loadCharacter()
+        }
+
         CharacterScreen(
             characterState = characterState,
             episodesState = episodesState,
@@ -56,6 +61,9 @@ fun NavGraphBuilder.characterScreen(
             },
             onNavigateToLocation = {
                 navController.navigate(Screen.Location.createRoute(locationId = it.toString()))
+            },
+            onRetry = {
+                loadCharacter()
             },
             onBackPress = {
                 navController.popBackStack()

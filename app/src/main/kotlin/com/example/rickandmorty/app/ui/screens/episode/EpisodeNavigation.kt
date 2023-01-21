@@ -21,7 +21,7 @@ fun NavGraphBuilder.episodeScreen(
 
     composable(
         route = Screen.Episode.route, arguments = listOf(
-            navArgument("episodeId") { defaultValue = 1 },
+            navArgument(Screen.Episode.episodeId) { defaultValue = 1 },
         )
     ) { backStackEntry ->
 
@@ -30,16 +30,16 @@ fun NavGraphBuilder.episodeScreen(
         val episodeState by viewModel.episodeFlow.collectAsStateWithLifecycle()
         val charactersState by viewModel.charactersFlow.collectAsStateWithLifecycle()
 
-        val episodeId = backStackEntry.arguments?.getInt("episodeId", 1)
+        val episodeId = backStackEntry.arguments?.getInt(Screen.Episode.episodeId, 1)
 
-        fun getEpisode(isPullRefresh: Boolean = false) {
+        fun loadEpisode() {
             episodeId?.let {
-                viewModel.getEpisode(episodeId = it, isPullRefresh = isPullRefresh)
+                viewModel.getEpisode(episodeId = it)
             }
         }
 
         LaunchedEffect(key1 = episodeId) {
-            getEpisode()
+            loadEpisode()
         }
 
         val isLoading by remember {
@@ -61,9 +61,9 @@ fun NavGraphBuilder.episodeScreen(
                     )
                 )
             },
-//            onRefresh = {
-//                getEpisode(isPullRefresh = true)
-//            },
+            onRetry = {
+                loadEpisode()
+            },
             onBackPress = {
                 navController.popBackStack()
             },

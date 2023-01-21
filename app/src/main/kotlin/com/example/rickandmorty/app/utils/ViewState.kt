@@ -8,7 +8,7 @@ sealed class ViewState<out T : Any> {
 
     object Empty : ViewState<Nothing>()
 
-    data class Error(val errorMessage: String) : ViewState<Nothing>()
+    data class Error(val errorCode: String) : ViewState<Nothing>()
 
     data class Populated<T : Any>(private val value: T) : ViewState<T>() {
         operator fun invoke(): T = value

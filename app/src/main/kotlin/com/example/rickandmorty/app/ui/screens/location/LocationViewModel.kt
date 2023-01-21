@@ -45,7 +45,7 @@ class LocationViewModel @Inject constructor(
                     _charactersFlow.emit(ViewState.Populated(listOf()))
                 }
             }.onFailure {
-                _locationFlow.emit(ViewState.Error(errorMessage = "Error loading location"))
+                _locationFlow.emit(ViewState.Error(errorCode = "error_loading_location"))
             }
         }
     }
@@ -57,7 +57,7 @@ class LocationViewModel @Inject constructor(
         }.onSuccess {
             _charactersFlow.emit(ViewState.Populated(it))
         }.onFailure {
-            _charactersFlow.emit(ViewState.Error(errorMessage = "Error loading characters"))
+            _charactersFlow.emit(ViewState.Error(errorCode = "error_loading_characters"))
         }
     }
 }

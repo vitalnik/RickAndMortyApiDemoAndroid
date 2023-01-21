@@ -19,6 +19,7 @@ import com.example.rickandmorty.app.ui.preview.CharactersPreviewProvider
 import com.example.rickandmorty.app.ui.preview.LocationsPreviewProvider
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.app.utils.ViewState
+import com.example.rickandmorty.app.utils.extensions.toErrorMessage
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.domain.models.CharacterModel
 import com.example.rickandmorty.domain.models.LocationModel
@@ -28,9 +29,12 @@ fun LocationScreen(
     locationState: ViewState<LocationModel>,
     charactersState: ViewState<List<CharacterModel>>,
     onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
+    onRetry: () -> Unit = {},
     onBackPress: () -> Unit = {},
     onNavigateHome: () -> Unit = {},
 ) {
+
+    SetSystemBarsColor()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -95,11 +99,11 @@ fun LocationScreen(
             }
 
             if (locationState is ViewState.Error) {
-                ErrorMessage(text = locationState.errorMessage)
+                ErrorMessage(text = locationState.errorCode.toErrorMessage(), onRetry = onRetry)
             }
 
             if (charactersState is ViewState.Error) {
-                ErrorMessage(text = charactersState.errorMessage)
+                ErrorMessage(text = charactersState.errorCode.toErrorMessage(), onRetry = onRetry)
             }
 
             if (locationState is ViewState.Loading || charactersState is ViewState.Loading) {

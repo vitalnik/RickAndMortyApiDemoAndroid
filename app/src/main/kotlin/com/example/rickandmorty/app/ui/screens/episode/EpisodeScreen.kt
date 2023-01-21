@@ -18,21 +18,23 @@ import com.example.rickandmorty.app.ui.preview.CharactersPreviewProvider
 import com.example.rickandmorty.app.ui.preview.EpisodesPreviewProvider
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.app.utils.ViewState
+import com.example.rickandmorty.app.utils.extensions.toErrorMessage
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.domain.models.CharacterModel
 import com.example.rickandmorty.domain.models.EpisodeModel
 
-//@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EpisodeScreen(
     episodeState: ViewState<EpisodeModel>,
     isLoading: Boolean = false,
     charactersState: ViewState<List<CharacterModel>>,
     onNavigateToCharacter: (character: CharacterModel) -> Unit = {},
-    //  onRefresh: () -> Unit = {},
+    onRetry: () -> Unit = {},
     onBackPress: () -> Unit = {},
     onNavigateHome: () -> Unit = {},
 ) {
+
+    SetSystemBarsColor()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -59,11 +61,8 @@ fun EpisodeScreen(
             )
         }) { scaffoldPadding ->
 
-        //val pullRefreshState = rememberPullRefreshState(isLoading, onRefresh)
-
         Box(
             modifier = Modifier
-                //.pullRefresh(pullRefreshState)
                 .fillMaxSize()
                 .padding(
                     top = scaffoldPadding.calculateTopPadding(),
@@ -97,18 +96,16 @@ fun EpisodeScreen(
             }
 
             if (episodeState is ViewState.Error) {
-                ErrorMessage(episodeState.errorMessage)
+                ErrorMessage(episodeState.errorCode.toErrorMessage(), onRetry = onRetry)
             }
 
             if (charactersState is ViewState.Error) {
-                ErrorMessage(charactersState.errorMessage)
+                ErrorMessage(charactersState.errorCode.toErrorMessage(), onRetry = onRetry)
             }
 
             if (isLoading) {
                 CenteredLoadingIndicator()
             }
-
-            //PullRefreshIndicator(isLoading, pullRefreshState, Modifier.align(Alignment.TopCenter))
         }
     }
 }

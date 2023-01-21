@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.components.HomeButton
-import com.example.rickandmorty.app.ui.components.SystemBarsColor
+import com.example.rickandmorty.app.ui.components.SetSystemBarsColor
 import com.example.rickandmorty.app.ui.components.VerticalSpacer
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 
@@ -23,7 +23,7 @@ fun HomeScreen(
 ) {
 
     // background image is kinds dark, use light icons
-    SystemBarsColor(useDarkIcons = false)
+    SetSystemBarsColor(useDarkIcons = false)
 
     Box(
         modifier = Modifier

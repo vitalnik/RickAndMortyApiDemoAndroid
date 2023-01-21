@@ -22,6 +22,7 @@ import com.example.rickandmorty.app.ui.preview.EpisodesPreviewProvider
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.app.utils.ViewState
 import com.example.rickandmorty.app.utils.extensions.getIdFromUrl
+import com.example.rickandmorty.app.utils.extensions.toErrorMessage
 import com.example.rickandmorty.app.utils.withState
 import com.example.rickandmorty.domain.models.CharacterModel
 import com.example.rickandmorty.domain.models.EpisodeModel
@@ -30,11 +31,14 @@ import com.example.rickandmorty.domain.models.EpisodeModel
 fun CharacterScreen(
     characterState: ViewState<CharacterModel>,
     episodesState: ViewState<List<EpisodeModel>>,
-    onNavigateToEpisode: (episodeId: Int) -> Unit = {},
-    onNavigateToLocation: (locationId: Int) -> Unit = {},
-    onBackPress: () -> Unit = {},
-    onNavigateHome: () -> Unit = {}
+    onNavigateToEpisode: (episodeId: Int) -> Unit,
+    onNavigateToLocation: (locationId: Int) -> Unit,
+    onRetry: () -> Unit,
+    onBackPress: () -> Unit,
+    onNavigateHome: () -> Unit
 ) {
+
+    SetSystemBarsColor()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -107,16 +111,14 @@ fun CharacterScreen(
                             })
                     }
                 }
-
-                item {
-                    if (episodesState is ViewState.Error) {
-                        ErrorMessage(episodesState.errorMessage)
-                    }
-                }
             }
 
             if (characterState is ViewState.Error) {
-                ErrorMessage(text = characterState.errorMessage)
+                ErrorMessage(text = characterState.errorCode.toErrorMessage(), onRetry = onRetry)
+            }
+
+            if (episodesState is ViewState.Error) {
+                ErrorMessage(text = episodesState.errorCode.toErrorMessage(), onRetry = onRetry)
             }
 
             if (characterState is ViewState.Loading || episodesState is ViewState.Loading) {
@@ -301,7 +303,12 @@ fun CharacterScreenPreview() {
     RickAndMortyTheme {
         CharacterScreen(
             characterState = ViewState.Populated(CharactersPreviewProvider().values.first()),
-            episodesState = ViewState.Populated(EpisodesPreviewProvider().values.toList())
+            episodesState = ViewState.Populated(EpisodesPreviewProvider().values.toList()),
+            onNavigateToEpisode = {},
+            onNavigateHome = {},
+            onRetry = {},
+            onNavigateToLocation = {},
+            onBackPress = {}
         )
     }
 }
