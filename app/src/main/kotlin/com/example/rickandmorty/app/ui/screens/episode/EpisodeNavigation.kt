@@ -9,9 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
-import com.example.rickandmorty.app.CHARACTER_SCREEN_ROUTE
-import com.example.rickandmorty.app.EPISODE_SCREEN_ROUTE
-import com.example.rickandmorty.app.HOME_SCREEN_ROUTE
+import com.example.rickandmorty.app.Screen
 import com.example.rickandmorty.app.utils.ViewState
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.serialization.encodeToString
@@ -22,7 +20,7 @@ fun NavGraphBuilder.episodeScreen(
 ) {
 
     composable(
-        route = "$EPISODE_SCREEN_ROUTE?episodeId={episodeId}", arguments = listOf(
+        route = Screen.Episode.route, arguments = listOf(
             navArgument("episodeId") { defaultValue = 1 },
         )
     ) { backStackEntry ->
@@ -56,7 +54,12 @@ fun NavGraphBuilder.episodeScreen(
             isLoading = isLoading,
             onNavigateToCharacter = {
                 val characterJson = Json.encodeToString(it)
-                navController.navigate("$CHARACTER_SCREEN_ROUTE?character=$characterJson&characterId=${it.id}")
+                navController.navigate(
+                    Screen.Character.createRoute(
+                        it.id.toString(),
+                        characterJson
+                    )
+                )
             },
 //            onRefresh = {
 //                getEpisode(isPullRefresh = true)
@@ -65,7 +68,7 @@ fun NavGraphBuilder.episodeScreen(
                 navController.popBackStack()
             },
             onNavigateHome = {
-                navController.popBackStack(HOME_SCREEN_ROUTE, inclusive = false)
+                navController.popBackStack(Screen.Home.route, inclusive = false)
             })
 
     }

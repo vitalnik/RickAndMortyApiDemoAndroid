@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.common.EpisodeCard
 import com.example.rickandmorty.app.ui.components.*
+import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.domain.models.EpisodeModel
 import rememberLazyListState
 
@@ -27,9 +29,9 @@ fun EpisodesScreen(
     alertDialogVisible: Boolean,
     onRetry: () -> Unit,
     onDismiss: () -> Unit,
-    seasons: List<String>,
-    selectedSeason: String,
-    onSeasonSelected: (season: String) -> Unit,
+    seasons: List<TabItem>,
+    selectedSeason: Int,
+    onSeasonSelected: (season: Int) -> Unit,
     onNavigateToEpisode: (episodeId: Int) -> Unit,
     onBackPress: () -> Unit
 ) {
@@ -70,6 +72,7 @@ fun EpisodesScreen(
         ) {
 
             LazyColumn(state = listState) {
+
 
                 stickyHeader {
                     SeasonTabs(seasons = seasons,
@@ -120,17 +123,16 @@ fun EpisodesScreen(
 
 @Composable
 private fun SeasonTabs(
-    seasons: List<String>,
-    selectedSeason: String,
-    onSeasonSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    seasons: List<TabItem>,
+    selectedSeason: Int,
+    onSeasonSelected: (Int) -> Unit,
 ) {
-    val selectedIndex = seasons.indexOfFirst { it == selectedSeason }
+    val selectedIndex = seasons.indexOfFirst { it.id == selectedSeason }
 
     Box(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.surface)
-            .padding(vertical = 8.dp)
+            .padding(vertical = 4.dp)
     ) {
 
         ScrollableTabRow(
@@ -138,15 +140,17 @@ private fun SeasonTabs(
             divider = {}, /* Disable the built-in divider */
             edgePadding = 24.dp,
             indicator = {},
-            modifier = modifier
         ) {
             seasons.forEachIndexed { index, season ->
                 Tab(
                     selected = index == selectedIndex,
-                    onClick = { onSeasonSelected(season) },
-                    modifier.padding(horizontal = 4.dp)
+                    onClick = { onSeasonSelected(season.id) },
                 ) {
-                    ChoiceChipContent(text = season, selected = index == selectedIndex)
+                    ChoiceChipContent(
+                        text = season.label,
+                        selected = index == selectedIndex,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+                    )
                 }
             }
         }
@@ -180,3 +184,10 @@ private fun ChoiceChipContent(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun ChoiceChipContentPreview() {
+    RickAndMortyTheme {
+        ChoiceChipContent(text = "Chip Tab", selected = false)
+    }
+}

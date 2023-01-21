@@ -7,9 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.rickandmorty.app.LOCATIONS_SCREEN_ROUTE
-import com.example.rickandmorty.app.LOCATION_SCREEN_ROUTE
 import com.example.rickandmorty.app.MainViewModel
+import com.example.rickandmorty.app.Screen
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -20,7 +19,7 @@ fun NavGraphBuilder.locationsScreen(
     mainViewModel: MainViewModel
 ) {
 
-    composable(route = LOCATIONS_SCREEN_ROUTE) {
+    composable(route = Screen.Locations.route) {
 
         val context = LocalContext.current
 
@@ -91,7 +90,7 @@ fun NavGraphBuilder.locationsScreen(
                 alertDialogVisible = false
             },
             onNavigateToLocation = {
-                navController.navigate("$LOCATION_SCREEN_ROUTE?locationId=$it")
+                navController.navigate(Screen.Location.createRoute(it.toString()))
             },
             onBackPress = {
                 navController.popBackStack()

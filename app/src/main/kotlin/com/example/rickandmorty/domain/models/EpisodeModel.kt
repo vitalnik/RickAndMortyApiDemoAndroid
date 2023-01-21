@@ -8,5 +8,6 @@ data class EpisodeModel(
     val name: String,
     val airDate: String,
     val episodeCode: String,
+    val seasonNumber: Int,
     val characterIds: List<Int>
 )

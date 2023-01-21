@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = HOME_SCREEN_ROUTE,
+                        startDestination = Screen.Home.route,
                     ) {
                         buildNavigationGraph(navController = navController)
                     }

@@ -8,9 +8,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.rickandmorty.app.EPISODES_SCREEN_ROUTE
-import com.example.rickandmorty.app.EPISODE_SCREEN_ROUTE
 import com.example.rickandmorty.app.MainViewModel
+import com.example.rickandmorty.app.Screen
 import com.google.accompanist.navigation.animation.composable
 
 fun NavGraphBuilder.episodesScreen(
@@ -18,7 +17,7 @@ fun NavGraphBuilder.episodesScreen(
     mainViewModel: MainViewModel
 ) {
 
-    composable(route = EPISODES_SCREEN_ROUTE) {
+    composable(route = Screen.Episodes.route) {
 
         val viewModel = hiltViewModel<EpisodesViewModel>()
 
@@ -63,7 +62,6 @@ fun NavGraphBuilder.episodesScreen(
             }
         }
 
-        val seasons = viewModel.seasons
         val selectedSeason by viewModel.selectedSeason
 
         EpisodesScreen(
@@ -72,26 +70,28 @@ fun NavGraphBuilder.episodesScreen(
             isEmpty = isEmpty,
             alertDialogVisible = alertDialogVisible,
             onRetry = {
+                viewModel.selectedSeason.value = 0
                 mainViewModel.episodeSearchValue.value = ""
                 pagingItems.refresh()
             },
             onDismiss = {
                 alertDialogVisible = false
             },
-            seasons = seasons,
+            seasons = viewModel.seasons,
             selectedSeason = selectedSeason,
             onSeasonSelected = {
 
                 viewModel.selectedSeason.value = it
 
-                val searchQuery =
-                    "S${it.split(" ")[1].toIntOrNull()?.toString()?.padStart(2, '0') ?: ""}"
+                val searchQuery = if (it > 0)
+                    "S${it.toString().padStart(2, '0')}" else ""
+
                 mainViewModel.episodeSearchValue.value = searchQuery
 
                 pagingItems.refresh()
             },
             onNavigateToEpisode = {
-                navController.navigate("$EPISODE_SCREEN_ROUTE?episodeId=$it")
+                navController.navigate(Screen.Episode.createRoute(it.toString()))
             },
             onBackPress = {
                 navController.popBackStack()

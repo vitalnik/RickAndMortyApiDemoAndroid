@@ -21,5 +21,6 @@ internal fun EpisodeDto.toDomain() =
         name = this.name,
         airDate = this.air_date,
         episodeCode = this.episode,
+        seasonNumber = this.episode.substring(1, 3).toInt(),
         characterIds = this.characters.idsList(),
     )

@@ -7,9 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
-import com.example.rickandmorty.app.CHARACTER_SCREEN_ROUTE
-import com.example.rickandmorty.app.HOME_SCREEN_ROUTE
-import com.example.rickandmorty.app.LOCATION_SCREEN_ROUTE
+import com.example.rickandmorty.app.Screen
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -19,7 +17,7 @@ fun NavGraphBuilder.locationScreen(
 ) {
 
     composable(
-        route = "$LOCATION_SCREEN_ROUTE?locationId={locationId}", arguments = listOf(
+        route = Screen.Location.route, arguments = listOf(
             navArgument("locationId") { defaultValue = 1 },
         )
     ) { backStackEntry ->
@@ -42,13 +40,18 @@ fun NavGraphBuilder.locationScreen(
             charactersState = charactersState,
             onNavigateToCharacter = {
                 val characterJson = Json.encodeToString(it)
-                navController.navigate("$CHARACTER_SCREEN_ROUTE?character=$characterJson&characterId=${it.id}")
+                navController.navigate(
+                    Screen.Character.createRoute(
+                        it.id.toString(),
+                        characterJson
+                    )
+                )
             },
             onBackPress = {
                 navController.popBackStack()
             },
             onNavigateHome = {
-                navController.popBackStack(HOME_SCREEN_ROUTE, inclusive = false)
+                navController.popBackStack(Screen.Home.route, inclusive = false)
             })
 
     }

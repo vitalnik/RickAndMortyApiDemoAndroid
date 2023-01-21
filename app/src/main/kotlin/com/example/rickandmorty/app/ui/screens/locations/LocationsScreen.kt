@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
@@ -52,15 +53,15 @@ fun LocationsScreen(
                 title = {
                     TopAppBarRow(
                         title = stringResource(id = R.string.locations),
-                    icon1 = R.drawable.ic_refresh,
-                    onIcon1Click = {
-                        onRetry()
-                    })
-            }, navigationIcon = {
-                NavigationIcon {
-                    onBackPress()
-                }
-            }, scrollBehavior = scrollBehavior
+                        icon1 = R.drawable.ic_refresh,
+                        onIcon1Click = {
+                            onRetry()
+                        })
+                }, navigationIcon = {
+                    NavigationIcon {
+                        onBackPress()
+                    }
+                }, scrollBehavior = scrollBehavior
             )
         }) { scaffoldPadding ->
 
@@ -117,8 +118,11 @@ fun LocationsScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LocationCardPreview() {
+private fun LocationCardPreview(
+    @PreviewParameter(provider = LocationsPreviewProvider::class, limit = 3)
+    location: LocationModel,
+) {
     RickAndMortyTheme {
-        LocationCard(location = LocationsPreviewProvider().values.first())
+        LocationCard(location = location)
     }
 }
