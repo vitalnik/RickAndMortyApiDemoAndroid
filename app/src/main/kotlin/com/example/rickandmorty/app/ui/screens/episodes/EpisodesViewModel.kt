@@ -11,18 +11,12 @@ class TabItem(val label: String, val id: Int)
 class EpisodesViewModel @Inject constructor() :
     ViewModel() {
 
-    private val seasonCount = 5
-
     val selectedSeason = mutableStateOf(0)
 
-    val seasons = mutableListOf<TabItem>()
-
-    init {
-        seasons.add(TabItem("All Seasons", 0))
-        repeat(seasonCount) {
-            seasons.add(TabItem("Season ${it + 1}", it + 1))
-        }
+    companion object {
+        const val seasonCount = 6
     }
+
 
 }
 

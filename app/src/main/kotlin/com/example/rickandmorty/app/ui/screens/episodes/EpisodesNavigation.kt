@@ -8,6 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.rickandmorty.R
 import com.example.rickandmorty.app.MainViewModel
 import com.example.rickandmorty.app.Screen
 import com.google.accompanist.navigation.animation.composable
@@ -46,6 +47,15 @@ fun NavGraphBuilder.episodesScreen(
                         pagingItems.loadState.append is LoadState.Error
         }
 
+        val seasons = remember {
+            val seasonsList = mutableListOf<TabItem>()
+            seasonsList.add(TabItem(context.getString(R.string.all_seasons), 0))
+            repeat(EpisodesViewModel.seasonCount) {
+                seasonsList.add(TabItem(context.getString(R.string.season, it + 1), it + 1))
+            }
+            seasonsList
+        }
+
 //        LaunchedEffect(key1 = pagingItems.loadState.append) {
 //            if (pagingItems.loadState.append.endOfPaginationReached) {
 //                Toast.makeText(
@@ -77,7 +87,7 @@ fun NavGraphBuilder.episodesScreen(
             onDismiss = {
                 alertDialogVisible = false
             },
-            seasons = viewModel.seasons,
+            seasons = seasons,
             selectedSeason = selectedSeason,
             onSeasonSelected = {
 

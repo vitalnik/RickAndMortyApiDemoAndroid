@@ -51,5 +51,7 @@
     <string name="all_locations_loaded">All locations loaded</string>
     <string name="all_episodes_loaded">All episodes loaded</string>
 
+    <string name="all_seasons">All Seasons</string>
+    <string name="season">Season %1$d</string>
 
 </resources>
