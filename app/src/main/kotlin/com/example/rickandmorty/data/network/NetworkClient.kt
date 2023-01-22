@@ -27,6 +27,11 @@ class NetworkClient @Inject constructor() {
             logger = CustomAndroidHttpLogger
             level = LogLevel.INFO
         }
+
+        // uncomment when using proxy, ex. Charles
+//        engine {
+//            proxy = ProxyBuilder.http("http://192.168.171.20:8888/")
+//        }
     }
 
     companion object {

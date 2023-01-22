@@ -73,7 +73,6 @@ fun EpisodesScreen(
 
             LazyColumn(state = listState) {
 
-
                 stickyHeader {
                     SeasonTabs(seasons = seasons,
                         selectedSeason = selectedSeason,
@@ -91,6 +90,7 @@ fun EpisodesScreen(
                     episode?.let {
                         EpisodeCard(
                             episode = it,
+                            horizontalPadding = 16.dp,
                             onNavigateToEpisode = {
                                 onNavigateToEpisode(it.id)
                             })

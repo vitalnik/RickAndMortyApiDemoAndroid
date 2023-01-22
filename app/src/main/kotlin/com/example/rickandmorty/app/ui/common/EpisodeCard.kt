@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.components.DividerLine
@@ -16,11 +17,12 @@ import com.example.rickandmorty.domain.models.EpisodeModel
 @Composable
 fun EpisodeCard(
     episode: EpisodeModel,
-    onNavigateToEpisode: () -> Unit
+    horizontalPadding: Dp = 0.dp,
+    onNavigateToEpisode: () -> Unit,
 ) {
     ElevatedCard(modifier = Modifier
         .fillMaxWidth()
-        .padding(vertical = 8.dp, horizontal = 16.dp),
+        .padding(vertical = 8.dp, horizontal = horizontalPadding),
         onClick = {
             onNavigateToEpisode()
         }

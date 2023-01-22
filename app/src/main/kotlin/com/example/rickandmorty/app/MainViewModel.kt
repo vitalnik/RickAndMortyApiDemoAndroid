@@ -1,5 +1,6 @@
 package com.example.rickandmorty.app
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,8 +23,7 @@ class MainViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
     private val getLocationsUseCase: GetLocationsUseCase,
     private val getEpisodesUseCase: GetEpisodesUseCase,
-) :
-    ViewModel() {
+) : ViewModel() {
 
     val characterNameSearchValue = mutableStateOf("")
 
@@ -57,6 +57,8 @@ class MainViewModel @Inject constructor(
 
     val episodeSearchValue = mutableStateOf("")
 
+    val seasons = mutableStateListOf<Int>()
+
     val episodesPagingData: Flow<PagingData<EpisodeModel>> = Pager(
         pagingSourceFactory = {
             CustomPagingSource(dataProvider = {
@@ -64,7 +66,16 @@ class MainViewModel @Inject constructor(
                 val searchQuery =
                     if (episodeSearchValue.value.isNotEmpty()) "&episode=${episodeSearchValue.value}" else ""
 
-                getEpisodesUseCase(it, searchQuery)
+                val allEpisodes = getEpisodesUseCase(it, searchQuery)
+
+                // collecting unique season numbers
+                allEpisodes.forEach { episode ->
+                    if (!seasons.contains(episode.seasonNumber)) {
+                        seasons.add(episode.seasonNumber)
+                    }
+                }
+
+                allEpisodes
             })
         },
         config = PagingConfig(pageSize = pageSize)

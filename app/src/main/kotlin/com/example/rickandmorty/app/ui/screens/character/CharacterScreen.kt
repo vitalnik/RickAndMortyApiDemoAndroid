@@ -288,9 +288,11 @@ fun LazyListScope.episodesList(
     items(items = episodes, key = {
         it.id
     }) { episode ->
-        EpisodeCard(episode, onNavigateToEpisode = {
-            onNavigateToEpisode(episode.id)
-        })
+        EpisodeCard(
+            episode = episode,
+            onNavigateToEpisode = {
+                onNavigateToEpisode(episode.id)
+            })
     }
     item {
         VerticalSpacer()

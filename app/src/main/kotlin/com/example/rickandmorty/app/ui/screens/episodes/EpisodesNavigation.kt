@@ -47,6 +47,17 @@ fun NavGraphBuilder.episodesScreen(
                         pagingItems.loadState.append is LoadState.Error
         }
 
+//        val seasons by remember {
+//            derivedStateOf {
+//                val seasonsList = mutableListOf<TabItem>()
+//                seasonsList.add(TabItem(context.getString(R.string.all_seasons), 0))
+//                mainViewModel.seasons.forEach {
+//                    seasonsList.add(TabItem(context.getString(R.string.season, it), it))
+//                }
+//                seasonsList
+//            }
+//        }
+
         val seasons = remember {
             val seasonsList = mutableListOf<TabItem>()
             seasonsList.add(TabItem(context.getString(R.string.all_seasons), 0))
@@ -55,16 +66,6 @@ fun NavGraphBuilder.episodesScreen(
             }
             seasonsList
         }
-
-//        LaunchedEffect(key1 = pagingItems.loadState.append) {
-//            if (pagingItems.loadState.append.endOfPaginationReached) {
-//                Toast.makeText(
-//                    context,
-//                    context.getString(R.string.all_episodes_loaded),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
 
         val isEmpty by remember {
             derivedStateOf {
