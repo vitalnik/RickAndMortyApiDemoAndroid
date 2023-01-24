@@ -65,6 +65,9 @@ fun NavGraphBuilder.characterScreen(
             onRetry = {
                 loadCharacter()
             },
+            onCharacterImageClick = { url ->
+                navController.navigate(Screen.CharacterImage.createRoute(imageUrl = url))
+            },
             onBackPress = {
                 navController.popBackStack()
             },

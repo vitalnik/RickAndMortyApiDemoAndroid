@@ -70,7 +70,10 @@ private fun CharacterCard(
 
             Row {
 
-                CharacterImage(imageUrl = character.imageUrl, size = 80.dp)
+                CharacterImage(
+                    imageUrl = character.imageUrl,
+                    size = 80.dp
+                )
 
                 HorizontalSpacer()
 

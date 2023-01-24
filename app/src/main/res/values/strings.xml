@@ -38,6 +38,7 @@
 
     <string name="oops">Oops</string>
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="try_again">Try again</string>
     <string name="back">Back</string>

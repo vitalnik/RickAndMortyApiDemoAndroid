@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -15,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
+import com.example.rickandmorty.app.ui.theme.shapes
 
 @Composable
 fun SearchPanel(
@@ -31,7 +31,7 @@ fun SearchPanel(
 
         OutlinedTextField(
             value = searchValue,
-            shape = RoundedCornerShape(25),
+            shape = shapes.large,
             label = { Text(text = stringResource(id = R.string.search_by_name)) },
             leadingIcon = {
                 Icon(

@@ -12,6 +12,13 @@ sealed class Screen(val route: String) {
             "character?characterId=$characterId&characterJson=$characterJson"
     }
 
+    object CharacterImage : Screen("characterImage?url={imageUrl}") {
+        const val imageUrl = "imageUrl"
+
+        fun createRoute(imageUrl: String) =
+            "characterImage?url=$imageUrl"
+    }
+
     object Locations : Screen("locations")
     object Location : Screen("location/{locationId}") {
         const val locationId = "locationId"

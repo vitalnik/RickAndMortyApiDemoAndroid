@@ -19,9 +19,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.example.rickandmorty.app.utils.extensions.clickableWithRipple
 
 @Composable
-fun CharacterImage(imageUrl: String, size: Dp = 100.dp, cornerRadius: Dp = 8.dp) {
+fun CharacterImage(
+    imageUrl: String,
+    size: Dp = 100.dp,
+    cornerRadius: Dp = 8.dp,
+    onImageClick: (() -> Unit)? = null
+) {
 
     Box(
         modifier = Modifier
@@ -35,15 +41,24 @@ fun CharacterImage(imageUrl: String, size: Dp = 100.dp, cornerRadius: Dp = 8.dp)
                 shape = RoundedCornerShape(cornerRadius)
             ),
     ) {
+
+        var imageModifier = Modifier
+            .width(size)
+            .height(size)
+            .clip(shape = RoundedCornerShape(cornerRadius))
+
+        if (onImageClick != null) {
+            imageModifier = imageModifier.clickableWithRipple {
+                onImageClick()
+            }
+        }
+
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
                 .crossfade(true)
                 .build(),
-            modifier = Modifier
-                .width(size)
-                .height(size)
-                .clip(shape = RoundedCornerShape(cornerRadius)),
+            modifier = imageModifier,
             contentDescription = "",
             contentScale = ContentScale.Crop,
             loading = {

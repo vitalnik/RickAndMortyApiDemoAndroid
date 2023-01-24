@@ -34,6 +34,7 @@ fun CharacterScreen(
     onNavigateToEpisode: (episodeId: Int) -> Unit,
     onNavigateToLocation: (locationId: Int) -> Unit,
     onRetry: () -> Unit,
+    onCharacterImageClick: (url: String) -> Unit,
     onBackPress: () -> Unit,
     onNavigateHome: () -> Unit
 ) {
@@ -83,7 +84,9 @@ fun CharacterScreen(
                 characterState.withState { it }?.let { character ->
 
                     item {
-                        CharacterHeader(character = character)
+                        CharacterHeader(character = character, onImageClick = {
+                            onCharacterImageClick(character.imageUrl)
+                        })
                     }
 
                     stickyHeader {
@@ -149,7 +152,8 @@ private fun EpisodeListHeader(episodesState: ViewState<List<EpisodeModel>>) {
 
 @Composable
 private fun CharacterHeader(
-    character: CharacterModel
+    character: CharacterModel,
+    onImageClick: () -> Unit,
 ) {
 
     Column(
@@ -158,7 +162,12 @@ private fun CharacterHeader(
 
         Row {
 
-            CharacterImage(imageUrl = character.imageUrl, size = 200.dp, cornerRadius = 16.dp)
+            CharacterImage(
+                imageUrl = character.imageUrl,
+                size = 200.dp,
+                cornerRadius = 16.dp,
+                onImageClick = onImageClick
+            )
 
             HorizontalSpacer()
 
@@ -309,6 +318,7 @@ fun CharacterScreenPreview() {
             onNavigateToEpisode = {},
             onNavigateHome = {},
             onRetry = {},
+            onCharacterImageClick = {},
             onNavigateToLocation = {},
             onBackPress = {}
         )

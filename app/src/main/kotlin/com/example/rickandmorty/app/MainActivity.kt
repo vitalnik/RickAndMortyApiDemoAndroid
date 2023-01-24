@@ -11,6 +11,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.rickandmorty.app.ui.screens.character.characterScreen
+import com.example.rickandmorty.app.ui.screens.characterimage.characterImageScreen
 import com.example.rickandmorty.app.ui.screens.characters.charactersScreen
 import com.example.rickandmorty.app.ui.screens.episode.episodeScreen
 import com.example.rickandmorty.app.ui.screens.episodes.episodesScreen
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
 
         charactersScreen(navController = navController, mainViewModel)
         characterScreen(navController = navController)
+        characterImageScreen(navController = navController)
 
         episodesScreen(navController = navController, mainViewModel)
         episodeScreen(navController = navController)
