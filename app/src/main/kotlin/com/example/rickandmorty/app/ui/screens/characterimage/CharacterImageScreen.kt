@@ -82,7 +82,7 @@ fun CharacterImageScreen(
 fun CharacterImageScreenPreview() {
     RickAndMortyTheme {
         CharacterImageScreen(
-            imageUrl = "",
+            imageUrl = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
             onClose = {}
         )
     }

@@ -3,8 +3,8 @@ package com.example.rickandmorty.ui
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.rickandmorty.ui.screens.home.HomeScreen
-import com.example.rickandmorty.ui.theme.RickAndMortyTheme
+import com.example.rickandmorty.app.ui.screens.home.HomeScreen
+import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import org.junit.Rule
 import org.junit.Test
 
