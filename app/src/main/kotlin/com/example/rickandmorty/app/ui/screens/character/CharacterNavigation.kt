@@ -8,8 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navArgument
 import com.example.rickandmorty.app.Screen
-import com.example.rickandmorty.data.network.dto.CharacterDto
-import com.example.rickandmorty.data.network.dto.toDomain
+import com.example.rickandmorty.domain.models.CharacterModel
 import com.google.accompanist.navigation.animation.composable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -40,8 +39,8 @@ fun NavGraphBuilder.characterScreen(
                 if (characterJson.isEmpty()) {
                     throw IllegalArgumentException()
                 }
-                val character = Json.decodeFromString<CharacterDto>(characterJson)
-                viewModel.setCharacter(character.toDomain())
+                val character = Json.decodeFromString<CharacterModel>(characterJson)
+                viewModel.setCharacter(character)
             } catch (e: Exception) {
                 characterId?.let {
                     viewModel.getCharacter(characterId = it)

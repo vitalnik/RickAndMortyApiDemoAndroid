@@ -20,5 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.example.rickandmorty.data.network.dto.** { *; }
--keep class com.example.rickandmorty.domain.models.** { *; }
+-keep class com.example.rickandmorty.data.network.dto.*
+-keep class com.example.rickandmorty.domain.models.*

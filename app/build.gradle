@@ -32,6 +32,7 @@ android {
     buildTypes {
         release {
             debuggable false
+            shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -70,7 +71,7 @@ android {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.freeCompilerArgs += [
             "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+            //"-Xopt-in=kotlinx.coroutines.FlowPreview",
             "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
             "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
@@ -92,6 +93,8 @@ dependencies {
     implementation "androidx.compose.animation:animation-core"
 
     implementation "androidx.paging:paging-compose:1.0.0-alpha17"
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // lifecycle support
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha04"
