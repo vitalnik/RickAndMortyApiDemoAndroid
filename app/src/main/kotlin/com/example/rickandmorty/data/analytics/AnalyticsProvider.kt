@@ -1,6 +1,6 @@
 package com.example.rickandmorty.data.analytics
 
-import android.util.Log
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +12,7 @@ class AnalyticsProvider @Inject constructor() {
     }
 
     fun log(event: String) {
-        Log.d("TAG", "Logging analytics event: $event")
+        Timber.d("Logging analytics event: $event")
     }
 
 }

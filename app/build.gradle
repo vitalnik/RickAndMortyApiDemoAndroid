@@ -125,6 +125,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
     // testing
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter'

@@ -10,7 +10,7 @@ import com.example.rickandmorty.domain.usecases.character.GetCharactersByIdsUseC
 import com.example.rickandmorty.domain.usecases.location.GetLocationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,12 +21,12 @@ class LocationViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var _locationFlow = MutableStateFlow<ViewState<LocationModel>>(ViewState.Initial)
-    var locationFlow: StateFlow<ViewState<LocationModel>> = _locationFlow
+    private val _locationFlow = MutableStateFlow<ViewState<LocationModel>>(ViewState.Initial)
+    val locationFlow = _locationFlow.asStateFlow()
 
-    private var _charactersFlow =
+    private val _charactersFlow =
         MutableStateFlow<ViewState<List<CharacterModel>>>(ViewState.Initial)
-    var charactersFlow: StateFlow<ViewState<List<CharacterModel>>> = _charactersFlow
+    val charactersFlow = _charactersFlow.asStateFlow()
 
     fun getLocation(locationId: Int) {
 

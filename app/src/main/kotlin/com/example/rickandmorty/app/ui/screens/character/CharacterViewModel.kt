@@ -10,7 +10,7 @@ import com.example.rickandmorty.domain.usecases.character.GetCharacterUseCase
 import com.example.rickandmorty.domain.usecases.episode.GetEpisodesByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,11 +21,11 @@ class CharacterViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var _characterFlow = MutableStateFlow<ViewState<CharacterModel>>(ViewState.Initial)
-    var characterFlow: StateFlow<ViewState<CharacterModel>> = _characterFlow
+    private val _characterFlow = MutableStateFlow<ViewState<CharacterModel>>(ViewState.Initial)
+    val characterFlow = _characterFlow.asStateFlow()
 
-    private var _episodesFlow = MutableStateFlow<ViewState<List<EpisodeModel>>>(ViewState.Initial)
-    var episodesFlow: StateFlow<ViewState<List<EpisodeModel>>> = _episodesFlow
+    private val _episodesFlow = MutableStateFlow<ViewState<List<EpisodeModel>>>(ViewState.Initial)
+    val episodesFlow = _episodesFlow.asStateFlow()
 
     fun getCharacter(characterId: Int) {
 

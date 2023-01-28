@@ -11,7 +11,7 @@ import com.example.rickandmorty.domain.usecases.episode.GetEpisodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,12 +22,12 @@ class EpisodeViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var _episodeFlow = MutableStateFlow<ViewState<EpisodeModel>>(ViewState.Initial)
-    var episodeFlow: StateFlow<ViewState<EpisodeModel>> = _episodeFlow
+    private val _episodeFlow = MutableStateFlow<ViewState<EpisodeModel>>(ViewState.Initial)
+    val episodeFlow = _episodeFlow.asStateFlow()
 
-    private var _charactersFlow =
+    private val _charactersFlow =
         MutableStateFlow<ViewState<List<CharacterModel>>>(ViewState.Initial)
-    var charactersFlow: StateFlow<ViewState<List<CharacterModel>>> = _charactersFlow
+    val charactersFlow = _charactersFlow.asStateFlow()
 
     fun getEpisode(episodeId: Int, isPullRefresh: Boolean = false) {
         viewModelScope.launch {

@@ -57,7 +57,7 @@ class MainViewModel @Inject constructor(
 
     val episodeSearchValue = mutableStateOf("")
 
-    val seasons = mutableStateListOf<Int>()
+    private val seasons = mutableStateListOf<Int>()
 
     val episodesPagingData: Flow<PagingData<EpisodeModel>> = Pager(
         pagingSourceFactory = {

@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterImageViewModel @Inject constructor(
-) :
-    ViewModel() {
+) : ViewModel() {
 
 }
