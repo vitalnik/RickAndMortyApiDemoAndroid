@@ -4,11 +4,15 @@ import com.example.rickandmorty.data.network.NetworkClient
 import com.example.rickandmorty.data.network.dto.EpisodeDto
 import com.example.rickandmorty.data.network.dto.EpisodesDto
 import com.example.rickandmorty.data.network.dto.toDomain
+import com.example.rickandmorty.data.network.exceptions.NetworkException
 import com.example.rickandmorty.domain.models.EpisodeModel
 import com.example.rickandmorty.domain.repositories.EpisodeRepository
+import io.ktor.client.call.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class EpisodeRepositoryImpl @Inject constructor(
@@ -31,12 +35,24 @@ class EpisodeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getEpisode(episodeId: Int): EpisodeModel {
-        val url = "${NetworkClient.BASE_URL}/episode/$episodeId"
-        val response = networkClient.client.get<EpisodeDto> {
-            url(url)
-            contentType(ContentType.Application.Json)
+        return try {
+            val url = "${NetworkClient.BASE_URL}/episode/$episodeId"
+            val response: HttpResponse = networkClient.client.get(url) {
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                response.receive<EpisodeDto>().toDomain()
+            } else {
+                throw NetworkException(response.status.value, response.status.description)
+            }
+        } catch (e: Throwable) {
+            Timber.d(">>> getEpisode exception: $e")
+            when (e) {
+                is NetworkException -> throw e
+                else -> throw NetworkException(999, e.message ?: "Unknown error")
+            }
         }
-        return response.toDomain()
     }
 
     override suspend fun getEpisodesByIds(episodeIds: String): List<EpisodeModel> {

@@ -17,6 +17,7 @@ class NetworkClient @Inject constructor() {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
                 json = Json {
+                    // prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
                 }
@@ -27,6 +28,13 @@ class NetworkClient @Inject constructor() {
             logger = CustomAndroidHttpLogger
             level = LogLevel.INFO
         }
+
+//        install(ContentNegotiation) {
+//            json(Json {
+//              prettyPrint = true
+//              isLenient = true
+//            })
+//        }
 
         // uncomment when using proxy, ex. Charles
 //        engine {
