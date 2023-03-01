@@ -2,10 +2,10 @@ package com.example.rickandmorty.data.network
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.cache.*
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.plugins.cache.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 import javax.inject.Inject
@@ -14,27 +14,25 @@ import javax.inject.Singleton
 @Singleton
 class NetworkClient @Inject constructor() {
     var client: HttpClient = HttpClient(CIO) {
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(
-                json = Json {
-                    // prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                }
-            )
+
+        install(ContentNegotiation) {
+            json(Json {
+                prettyPrint = true
+                isLenient = true
+            })
         }
+
+        install(Logging) {
+            logger = CustomAndroidHttpLogger
+            level = LogLevel.ALL
+        }
+
         install(HttpCache)
+
         install(Logging) {
             logger = CustomAndroidHttpLogger
             level = LogLevel.INFO
         }
-
-//        install(ContentNegotiation) {
-//            json(Json {
-//              prettyPrint = true
-//              isLenient = true
-//            })
-//        }
 
         // uncomment when using proxy, ex. Charles
 //        engine {

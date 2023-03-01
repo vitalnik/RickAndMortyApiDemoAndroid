@@ -8,7 +8,7 @@ import com.example.rickandmorty.data.network.exceptions.NetworkException
 import com.example.rickandmorty.domain.models.EpisodeModel
 import com.example.rickandmorty.domain.repositories.EpisodeRepository
 import io.ktor.client.call.*
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -20,13 +20,15 @@ class EpisodeRepositoryImpl @Inject constructor(
 ) : EpisodeRepository {
 
     override suspend fun getEpisodes(pageIndex: Int, searchQuery: String): List<EpisodeModel> {
-        val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex$searchQuery"
+        val url = "${NetworkClient.BASE_URL}/episode"
         return try {
-            val response = networkClient.client.get<EpisodesDto> {
-                url(url)
+            val response = networkClient.client.get(url) {
+                url {
+                    parameters.append("page", "$pageIndex$searchQuery")
+                }
                 contentType(ContentType.Application.Json)
             }
-            response.results.map { it.toDomain() }
+            response.body<EpisodesDto>().results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
             listOf()
         } catch (e: Exception) {
@@ -42,7 +44,7 @@ class EpisodeRepositoryImpl @Inject constructor(
             }
 
             if (response.status.isSuccess()) {
-                response.receive<EpisodeDto>().toDomain()
+                response.body<EpisodeDto>().toDomain()
             } else {
                 throw NetworkException(response.status.value, response.status.description)
             }
@@ -58,18 +60,16 @@ class EpisodeRepositoryImpl @Inject constructor(
     override suspend fun getEpisodesByIds(episodeIds: String): List<EpisodeModel> {
         val url = "${NetworkClient.BASE_URL}/episode/$episodeIds"
         return if (episodeIds.contains(",")) {
-            networkClient.client.get<List<EpisodeDto>> {
-                url(url)
+            networkClient.client.get(url) {
                 contentType(ContentType.Application.Json)
-            }.map {
+            }.body<List<EpisodeDto>>().map {
                 it.toDomain()
             }
         } else {
-            val singleDTO = networkClient.client.get<EpisodeDto> {
-                url(url)
+            val singleDTO = networkClient.client.get(url) {
                 contentType(ContentType.Application.Json)
             }
-            listOf(singleDTO.toDomain())
+            listOf(singleDTO.body<EpisodeDto>().toDomain())
         }
     }
 }

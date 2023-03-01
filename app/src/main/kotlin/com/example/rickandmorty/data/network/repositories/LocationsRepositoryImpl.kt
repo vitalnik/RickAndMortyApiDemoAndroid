@@ -6,7 +6,8 @@ import com.example.rickandmorty.data.network.dto.LocationsDto
 import com.example.rickandmorty.data.network.dto.toDomain
 import com.example.rickandmorty.domain.models.LocationModel
 import com.example.rickandmorty.domain.repositories.LocationRepository
-import io.ktor.client.features.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import javax.inject.Inject
@@ -18,11 +19,10 @@ class LocationsRepositoryImpl @Inject constructor(
     override suspend fun getLocations(pageIndex: Int, searchQuery: String): List<LocationModel> {
         val url = "${NetworkClient.BASE_URL}/location?page=$pageIndex$searchQuery"
         return try {
-            val response = networkClient.client.get<LocationsDto> {
-                url(url)
+            val response = networkClient.client.get(url) {
                 contentType(ContentType.Application.Json)
             }
-            response.results.map { it.toDomain() }
+            response.body<LocationsDto>().results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
             listOf()
         } catch (e: Exception) {
@@ -32,11 +32,10 @@ class LocationsRepositoryImpl @Inject constructor(
 
     override suspend fun getLocation(id: Int): LocationModel {
         val url = "${NetworkClient.BASE_URL}/location/$id"
-        val response = networkClient.client.get<LocationDto> {
-            url(url)
+        val response = networkClient.client.get(url) {
             contentType(ContentType.Application.Json)
         }
-        return response.toDomain()
+        return response.body<LocationDto>().toDomain()
     }
 }
 

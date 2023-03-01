@@ -8,9 +8,6 @@ https://rickandmortyapi.com/
 <br><br>
 For app building please use the latest stable version of Android Studio.
 <br>
-As of Jan 14, 2023 it's Electric Eel 2022.1.1
-<br>
-<br>
 
 ## Used technologies
 
