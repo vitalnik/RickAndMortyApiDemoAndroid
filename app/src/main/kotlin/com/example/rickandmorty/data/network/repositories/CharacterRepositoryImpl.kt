@@ -18,7 +18,8 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getCharacters(pageIndex: Int, searchQuery: String): List<CharacterModel> {
         val url = "${NetworkClient.BASE_URL}/character?page=$pageIndex$searchQuery"
         return try {
-            val response = networkClient.client.get<CharactersDto>(url) {
+            val response = networkClient.client.get<CharactersDto> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }
             response.results.map { it.toDomain() }
@@ -31,7 +32,8 @@ class CharacterRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacter(characterId: Int): CharacterModel {
         val url = "${NetworkClient.BASE_URL}/character/$characterId"
-        val response = networkClient.client.get<CharacterDto>(url) {
+        val response = networkClient.client.get<CharacterDto> {
+            url(url)
             contentType(ContentType.Application.Json)
         }
         return response.toDomain()
@@ -40,11 +42,13 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getCharactersByIds(characterIds: String): List<CharacterModel> {
         val url = "${NetworkClient.BASE_URL}/character/$characterIds"
         return if (characterIds.contains(",")) {
-            networkClient.client.get<List<CharacterDto>>(url) {
+            networkClient.client.get<List<CharacterDto>> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }.map { it.toDomain() }
         } else {
-            val singleDTO = networkClient.client.get<CharacterDto>(url) {
+            val singleDTO = networkClient.client.get<CharacterDto> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }
             listOf(singleDTO.toDomain())

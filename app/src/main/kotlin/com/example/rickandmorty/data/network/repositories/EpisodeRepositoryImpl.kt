@@ -22,7 +22,8 @@ class EpisodeRepositoryImpl @Inject constructor(
     override suspend fun getEpisodes(pageIndex: Int, searchQuery: String): List<EpisodeModel> {
         val url = "${NetworkClient.BASE_URL}/episode?page=$pageIndex$searchQuery"
         return try {
-            val response = networkClient.client.get<EpisodesDto>(url) {
+            val response = networkClient.client.get<EpisodesDto> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }
             response.results.map { it.toDomain() }
@@ -57,13 +58,15 @@ class EpisodeRepositoryImpl @Inject constructor(
     override suspend fun getEpisodesByIds(episodeIds: String): List<EpisodeModel> {
         val url = "${NetworkClient.BASE_URL}/episode/$episodeIds"
         return if (episodeIds.contains(",")) {
-            networkClient.client.get<List<EpisodeDto>>(url) {
+            networkClient.client.get<List<EpisodeDto>> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }.map {
                 it.toDomain()
             }
         } else {
-            val singleDTO = networkClient.client.get<EpisodeDto>(url) {
+            val singleDTO = networkClient.client.get<EpisodeDto> {
+                url(url)
                 contentType(ContentType.Application.Json)
             }
             listOf(singleDTO.toDomain())
