@@ -18,8 +18,7 @@ class LocationsRepositoryImpl @Inject constructor(
     override suspend fun getLocations(pageIndex: Int, searchQuery: String): List<LocationModel> {
         val url = "${NetworkClient.BASE_URL}/location?page=$pageIndex$searchQuery"
         return try {
-            val response = networkClient.client.get<LocationsDto> {
-                url(url)
+            val response = networkClient.client.get<LocationsDto>(url) {
                 contentType(ContentType.Application.Json)
             }
             response.results.map { it.toDomain() }
@@ -32,8 +31,7 @@ class LocationsRepositoryImpl @Inject constructor(
 
     override suspend fun getLocation(id: Int): LocationModel {
         val url = "${NetworkClient.BASE_URL}/location/$id"
-        val response = networkClient.client.get<LocationDto> {
-            url(url)
+        val response = networkClient.client.get<LocationDto>(url) {
             contentType(ContentType.Application.Json)
         }
         return response.toDomain()
