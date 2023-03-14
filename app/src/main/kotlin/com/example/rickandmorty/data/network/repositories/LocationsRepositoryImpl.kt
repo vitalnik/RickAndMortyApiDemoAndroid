@@ -25,9 +25,7 @@ class LocationsRepositoryImpl @Inject constructor(
             }
             response.body<LocationsDto>().results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
-            listOf()
-        } catch (e: Exception) {
-            throw e
+            emptyList()
         }
     }
 

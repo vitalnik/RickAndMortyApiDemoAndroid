@@ -29,9 +29,7 @@ class EpisodeRepositoryImpl @Inject constructor(
             }
             response.body<EpisodesDto>().results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
-            listOf()
-        } catch (e: Exception) {
-            throw e
+            emptyList()
         }
     }
 

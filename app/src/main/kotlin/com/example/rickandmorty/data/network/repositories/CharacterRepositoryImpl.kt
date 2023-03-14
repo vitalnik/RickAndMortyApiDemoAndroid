@@ -28,9 +28,7 @@ class CharacterRepositoryImpl @Inject constructor(
             }
             response.body<CharactersDto>().results.map { it.toDomain() }
         } catch (e: ClientRequestException) {
-            listOf()
-        } catch (e: Exception) {
-            throw e
+            emptyList()
         }
     }
 
