@@ -6,10 +6,11 @@ import com.example.rickandmorty.data.network.dto.LocationsDto
 import com.example.rickandmorty.data.network.dto.toDomain
 import com.example.rickandmorty.domain.models.LocationModel
 import com.example.rickandmorty.domain.repositories.LocationRepository
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.request.get
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import javax.inject.Inject
 
 class LocationsRepositoryImpl @Inject constructor(

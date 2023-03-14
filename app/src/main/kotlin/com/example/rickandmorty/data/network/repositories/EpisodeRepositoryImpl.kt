@@ -7,11 +7,13 @@ import com.example.rickandmorty.data.network.dto.toDomain
 import com.example.rickandmorty.data.network.exceptions.NetworkException
 import com.example.rickandmorty.domain.models.EpisodeModel
 import com.example.rickandmorty.domain.repositories.EpisodeRepository
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import timber.log.Timber
 import javax.inject.Inject
 

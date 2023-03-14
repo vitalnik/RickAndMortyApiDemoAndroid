@@ -20,7 +20,13 @@ import androidx.paging.compose.items
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.common.LocationCard
 import com.example.rickandmorty.app.ui.common.SearchPanel
-import com.example.rickandmorty.app.ui.components.*
+import com.example.rickandmorty.app.ui.components.CenteredLoadingIndicator
+import com.example.rickandmorty.app.ui.components.EmptyState
+import com.example.rickandmorty.app.ui.components.NavigationIcon
+import com.example.rickandmorty.app.ui.components.RetryDialog
+import com.example.rickandmorty.app.ui.components.SetSystemBarsColor
+import com.example.rickandmorty.app.ui.components.TopAppBarRow
+import com.example.rickandmorty.app.ui.components.VerticalSpacer
 import com.example.rickandmorty.app.ui.preview.LocationsPreviewProvider
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.domain.models.LocationModel

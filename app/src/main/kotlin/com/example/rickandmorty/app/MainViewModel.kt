@@ -4,7 +4,12 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.cachedIn
 import com.example.rickandmorty.domain.models.CharacterModel
 import com.example.rickandmorty.domain.models.EpisodeModel
 import com.example.rickandmorty.domain.models.LocationModel
@@ -15,8 +20,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-const val firstPageIndex = 1
-const val pageSize = 20
+const val FIRST_PAGE_INDEX = 1
+const val PAGE_SIZE = 20
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -37,7 +42,7 @@ class MainViewModel @Inject constructor(
                 getCharactersUseCase(it, searchQuery)
             })
         },
-        config = PagingConfig(pageSize = pageSize)
+        config = PagingConfig(pageSize = PAGE_SIZE)
     ).flow.cachedIn(viewModelScope)
 
     val locationNameSearchValue = mutableStateOf("")
@@ -52,7 +57,7 @@ class MainViewModel @Inject constructor(
                 getLocationsUseCase(it, searchQuery)
             })
         },
-        config = PagingConfig(pageSize = pageSize)
+        config = PagingConfig(pageSize = PAGE_SIZE)
     ).flow.cachedIn(viewModelScope)
 
     val episodeSearchValue = mutableStateOf("")
@@ -78,7 +83,7 @@ class MainViewModel @Inject constructor(
                 allEpisodes
             })
         },
-        config = PagingConfig(pageSize = pageSize)
+        config = PagingConfig(pageSize = PAGE_SIZE)
     ).flow.cachedIn(viewModelScope)
 
 }
@@ -94,11 +99,11 @@ class CustomPagingSource<T : Any>(private val dataProvider: suspend (pageNumber:
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         return try {
-            val pageNumber = params.key ?: firstPageIndex
+            val pageNumber = params.key ?: FIRST_PAGE_INDEX
             val response = dataProvider.invoke(pageNumber)
-            val prevKey = if (pageNumber > firstPageIndex) pageNumber - 1 else null
+            val prevKey = if (pageNumber > FIRST_PAGE_INDEX) pageNumber - 1 else null
             val nextKey =
-                if (response.isNotEmpty() && response.count() == pageSize) pageNumber + 1 else null
+                if (response.isNotEmpty() && response.count() == PAGE_SIZE) pageNumber + 1 else null
 
             LoadResult.Page(
                 data = response,

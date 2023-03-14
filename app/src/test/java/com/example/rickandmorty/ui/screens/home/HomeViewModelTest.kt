@@ -35,6 +35,7 @@ class HomeViewModelTest {
 
     @AfterEach
     fun tearDown() {
+        // tear down code
     }
 
     @Test
@@ -46,6 +47,4 @@ class HomeViewModelTest {
 
         verify { analyticsManager.logEvent(AnalyticsManager.CHARACTERS_SCREEN_VIEW) }
     }
-
-
 }

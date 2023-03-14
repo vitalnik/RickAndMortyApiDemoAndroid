@@ -1,9 +1,18 @@
 package com.example.rickandmorty.app.ui.screens.episode
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -13,7 +22,12 @@ import androidx.compose.ui.unit.dp
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.common.CharactersListHeader
 import com.example.rickandmorty.app.ui.common.charactersList
-import com.example.rickandmorty.app.ui.components.*
+import com.example.rickandmorty.app.ui.components.CenteredLoadingIndicator
+import com.example.rickandmorty.app.ui.components.ErrorMessage
+import com.example.rickandmorty.app.ui.components.NavigationIcon
+import com.example.rickandmorty.app.ui.components.SetSystemBarsColor
+import com.example.rickandmorty.app.ui.components.TopAppBarRow
+import com.example.rickandmorty.app.ui.components.VerticalSpacer
 import com.example.rickandmorty.app.ui.preview.CharactersPreviewProvider
 import com.example.rickandmorty.app.ui.preview.EpisodesPreviewProvider
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme

@@ -30,4 +30,3 @@ fun NavGraphBuilder.characterImageScreen(
         )
     }
 }
-

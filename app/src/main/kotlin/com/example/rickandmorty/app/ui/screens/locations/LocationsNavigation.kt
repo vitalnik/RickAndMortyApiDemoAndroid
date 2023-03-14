@@ -1,8 +1,13 @@
 package com.example.rickandmorty.app.ui.screens.locations
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -21,7 +26,7 @@ fun NavGraphBuilder.locationsScreen(
 
     composable(route = Screen.Locations.route) {
 
-        val context = LocalContext.current
+        //val context = LocalContext.current
 
         val scope = rememberCoroutineScope()
         var refreshJob by remember { mutableStateOf<Job?>(Job()) }
