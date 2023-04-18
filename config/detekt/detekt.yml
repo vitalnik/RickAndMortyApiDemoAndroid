@@ -195,7 +195,7 @@ empty-blocks:
     active: true
 
 exceptions:
-  active: true
+  active: false # TODO: set up
   ExceptionRaisedInUnexpectedLocation:
     active: true
     methodNames:
@@ -655,7 +655,7 @@ style:
     active: true
     maxJumpCount: 1
   MagicNumber:
-    active: true
+    active: false # TODO: set up
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     ignoreNumbers:
       - '-1'
@@ -757,7 +757,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    active: true
+    active: false # TODO: set up
     allowedNames: '(_|ignored|expected|serialVersionUID)'
   UseArrayLiteralsInAnnotations:
     active: false

@@ -167,3 +167,11 @@ dependencies {
 }
 
 apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    buildUponDefaultConfig = true
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$projectDir/config/detekt/detekt-baseline.xml")
+    basePath = rootDir
+    parallel = true
+}
