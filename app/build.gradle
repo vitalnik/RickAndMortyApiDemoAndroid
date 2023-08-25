@@ -7,19 +7,19 @@ plugins {
 
     id 'dagger.hilt.android.plugin'
 
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.10'
 
     id 'de.mannodermaus.android-junit5'
 }
 
 android {
     namespace 'com.example.rickandmorty'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.rickandmorty"
         minSdk 23
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -51,33 +51,34 @@ android {
             signingConfig signingConfigs.debugConfig
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
+
     buildFeatures {
         compose true
+        buildConfig true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.0'
+        kotlinCompilerExtensionVersion '1.5.2'
     }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+        exclude 'META-INF/INDEX.LIST'
     }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-    }
-
-    android {
-        packagingOptions {
-            exclude 'META-INF/INDEX.LIST'
-        }
     }
 }
 
@@ -92,7 +93,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
 
-    def composeBom = platform('androidx.compose:compose-bom:2023.01.00')
+    def composeBom = platform('androidx.compose:compose-bom:2023.08.00')
     implementation composeBom
     androidTestImplementation composeBom
     implementation 'androidx.compose.ui:ui'
@@ -106,7 +107,7 @@ dependencies {
 
     implementation "androidx.paging:paging-compose:1.0.0-alpha18"
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     // lifecycle support
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -119,7 +120,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-alpha01"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
@@ -137,7 +138,7 @@ dependencies {
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
 
     // accompanist
-    implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    //implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
     // timber logging
@@ -162,7 +163,7 @@ dependencies {
     testImplementation 'io.mockk:mockk:1.13.4'
 
     // testing coroutines
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
 
 }
 

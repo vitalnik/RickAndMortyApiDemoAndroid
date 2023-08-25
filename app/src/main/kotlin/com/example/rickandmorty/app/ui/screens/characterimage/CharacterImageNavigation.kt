@@ -3,9 +3,9 @@ package com.example.rickandmorty.app.ui.screens.characterimage
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.rickandmorty.app.Screen
-import com.google.accompanist.navigation.animation.composable
 
 fun NavGraphBuilder.characterImageScreen(
     navController: NavHostController,

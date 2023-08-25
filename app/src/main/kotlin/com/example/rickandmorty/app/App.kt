@@ -8,7 +8,6 @@ import timber.log.Timber.DebugTree
 import timber.log.Timber.Forest.plant
 import timber.log.Timber.Tree
 
-
 @HiltAndroidApp
 class App : Application() {
 

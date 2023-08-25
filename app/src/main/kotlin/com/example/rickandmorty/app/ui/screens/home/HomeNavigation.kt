@@ -3,8 +3,8 @@ package com.example.rickandmorty.app.ui.screens.home
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
 import com.example.rickandmorty.app.Screen
-import com.google.accompanist.navigation.animation.composable
 
 fun NavGraphBuilder.homeScreen(
     navController: NavHostController,

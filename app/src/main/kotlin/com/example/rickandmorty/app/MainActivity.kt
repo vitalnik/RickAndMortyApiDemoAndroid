@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.rickandmorty.app.ui.screens.character.characterScreen
 import com.example.rickandmorty.app.ui.screens.characterimage.characterImageScreen
 import com.example.rickandmorty.app.ui.screens.characters.charactersScreen
@@ -19,8 +21,6 @@ import com.example.rickandmorty.app.ui.screens.home.homeScreen
 import com.example.rickandmorty.app.ui.screens.location.locationScreen
 import com.example.rickandmorty.app.ui.screens.locations.locationsScreen
 import com.example.rickandmorty.app.ui.theme.RickAndMortyTheme
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +34,10 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val navController = rememberAnimatedNavController()
+            val navController = rememberNavController()
             RickAndMortyTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    AnimatedNavHost(
+                    NavHost(
                         navController = navController,
                         startDestination = Screen.Home.route,
                     ) {
