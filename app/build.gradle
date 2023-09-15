@@ -105,9 +105,9 @@ dependencies {
     implementation "androidx.compose.animation:animation"
     implementation "androidx.compose.animation:animation-core"
 
-    implementation "androidx.paging:paging-compose:1.0.0-alpha18"
+    implementation "androidx.paging:paging-compose:3.2.1"
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
 
     // lifecycle support
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -163,7 +163,7 @@ dependencies {
     testImplementation 'io.mockk:mockk:1.13.4'
 
     // testing coroutines
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2'
 
 }
 

@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.common.EpisodeCard
 import com.example.rickandmorty.app.ui.components.CenteredLoadingIndicator
@@ -96,11 +95,12 @@ fun EpisodesScreen(
                 }
 
                 items(
-                    items = pagingItems,
+                    count = pagingItems.itemCount,
                     key = {
-                        it.id
+                        pagingItems[it]?.id ?: 0
                     }
-                ) { episode ->
+                ) { itemIndex ->
+                    val episode = pagingItems[itemIndex]
                     episode?.let {
                         EpisodeCard(
                             episode = it,

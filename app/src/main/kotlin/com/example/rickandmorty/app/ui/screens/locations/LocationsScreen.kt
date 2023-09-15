@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
 import com.example.rickandmorty.R
 import com.example.rickandmorty.app.ui.common.LocationCard
 import com.example.rickandmorty.app.ui.common.SearchPanel
@@ -88,11 +87,12 @@ fun LocationsScreen(
                 }
 
                 items(
-                    items = pagingItems,
+                    count = pagingItems.itemCount,
                     key = {
-                        it.id
+                        pagingItems[it]?.id ?: 0
                     }
-                ) { location ->
+                ) { itemIndex ->
+                    val location = pagingItems[itemIndex]
                     location?.let {
                         LocationCard(it) {
                             onNavigateToLocation(it.id)
