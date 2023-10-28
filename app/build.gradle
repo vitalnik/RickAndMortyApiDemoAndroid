@@ -107,7 +107,7 @@ dependencies {
 
     implementation "androidx.paging:paging-compose:3.2.1"
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // lifecycle support
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -120,7 +120,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-alpha01"
+    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-rc01"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 

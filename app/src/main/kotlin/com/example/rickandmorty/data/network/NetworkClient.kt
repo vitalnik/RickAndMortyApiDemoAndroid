@@ -1,16 +1,23 @@
 package com.example.rickandmorty.data.network
 
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.ProxyBuilder
+import io.ktor.client.engine.ProxyConfig
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.Url
 import io.ktor.network.tls.TLSConfigBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+import java.net.InetSocketAddress
+import java.net.Proxy
+import java.net.ProxySelector
+import java.net.URI
 import java.security.cert.X509Certificate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -41,10 +48,36 @@ class NetworkClient @Inject constructor() {
 
         // uncomment when using proxy, ex. Charles
         engine {
-//            proxy = ProxyBuilder.http(url = Url("http://192.168.171.86:8888/"))
+            proxy = getSystemProxy()
 //            https {
 //                trustManager = MyTrustManager(this)
 //            }
+        }
+    }
+
+    private fun getSystemProxy(): ProxyConfig? {
+
+        val proxySelector = ProxySelector.getDefault()
+        val url = URI(BASE_URL)
+        val proxyList = proxySelector.select(url)
+
+        var proxyHost: String? = null
+        var proxyPort: Int? = null
+        for (proxy in proxyList) {
+            val type = proxy.type()
+            val address = proxy.address()
+            if (type == Proxy.Type.DIRECT) {
+                // direct connection
+            } else if (type == Proxy.Type.HTTP) {
+                proxyHost = (address as InetSocketAddress).hostName
+                proxyPort = address.port
+            }
+        }
+
+        if (proxyHost != null) {
+            return ProxyBuilder.http(url = Url("http://$proxyHost:$proxyPort"))
+        } else {
+            return null
         }
     }
 
