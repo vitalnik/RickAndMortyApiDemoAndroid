@@ -72,6 +72,7 @@ fun CharacterScreen(
                             episodesState is ViewState.Loading
                         ) stringResource(id = R.string.loading) else "",
                         icon1 = R.drawable.ic_home,
+                        icon1ContentDescription = stringResource(id = R.string.go_home),
                         onIcon1Click = {
                             onNavigateHome()
                         }

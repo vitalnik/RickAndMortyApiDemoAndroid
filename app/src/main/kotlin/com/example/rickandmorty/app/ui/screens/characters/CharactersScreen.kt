@@ -75,7 +75,9 @@ fun CharactersScreen(
                     TopAppBarRow(
                         title = stringResource(id = R.string.characters),
                         icon1 = R.drawable.ic_search,
+                        icon1ContentDescription = stringResource(id = R.string.search_icon),
                         icon2 = R.drawable.ic_refresh,
+                        icon2ContentDescription = stringResource(id = R.string.refresh_icon),
                         onIcon1Click = {
                             onSearchIconClick()
                         },

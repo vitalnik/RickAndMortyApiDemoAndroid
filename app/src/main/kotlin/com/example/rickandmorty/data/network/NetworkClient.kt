@@ -41,11 +41,6 @@ class NetworkClient @Inject constructor() {
 
         install(HttpCache)
 
-        install(Logging) {
-            logger = CustomAndroidHttpLogger
-            level = LogLevel.INFO
-        }
-
         // uncomment when using proxy, ex. Charles
         engine {
             proxy = getSystemProxy()
@@ -56,10 +51,9 @@ class NetworkClient @Inject constructor() {
     }
 
     private fun getSystemProxy(): ProxyConfig? {
-
         val proxySelector = ProxySelector.getDefault()
-        val url = URI(BASE_URL)
-        val proxyList = proxySelector.select(url)
+        val uri = URI(BASE_URL)
+        val proxyList = proxySelector.select(uri)
 
         var proxyHost: String? = null
         var proxyPort: Int? = null
@@ -74,10 +68,10 @@ class NetworkClient @Inject constructor() {
             }
         }
 
-        if (proxyHost != null) {
-            return ProxyBuilder.http(url = Url("http://$proxyHost:$proxyPort"))
+        return if (proxyHost != null) {
+            ProxyBuilder.http(url = Url("http://$proxyHost:$proxyPort"))
         } else {
-            return null
+            null
         }
     }
 

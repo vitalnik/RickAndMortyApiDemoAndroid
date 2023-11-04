@@ -43,6 +43,8 @@
     <string name="try_again">Try again</string>
     <string name="back">Back</string>
     <string name="go_home">Go home</string>
+    <string name="search_icon">Search icon</string>
+    <string name="refresh_icon">Refresh icon</string>
 
     <string name="search_by_name">Search by name</string>
     <string name="no_characters_found">No characters found</string>
