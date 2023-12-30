@@ -52,12 +52,17 @@ fun HomeScreen(
                 modifier = Modifier.weight(5f, true)
             )
 
-            HomeButton(text = stringResource(id = R.string.characters), onNavigateToCharacters)
+            HomeButton(
+                text = stringResource(id = R.string.characters),
+                testTag = "characters_button",
+                onClick = onNavigateToCharacters
+            )
 
             VerticalSpacer()
 
             HomeButton(
                 text = stringResource(id = R.string.locations),
+                testTag = "locations_button",
                 onClick = onNavigateToLocations
             )
 
@@ -65,6 +70,7 @@ fun HomeScreen(
 
             HomeButton(
                 text = stringResource(id = R.string.episodes),
+                testTag = "episodes_button",
                 onClick = onNavigateToEpisodes
             )
 

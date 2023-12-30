@@ -20,12 +20,16 @@ import com.example.rickandmorty.app.ui.theme.shapes
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun HomeButton(text: String = "Button Title", onClick: () -> Unit) {
+fun HomeButton(
+    text: String = "Button Title",
+    testTag: String = "home_button",
+    onClick: () -> Unit
+) {
     Button(
         onClick = onClick,
         modifier = Modifier
             .semantics { testTagsAsResourceId = true }
-            .testTag("home_button")
+            .testTag(testTag)
             .width(200.dp)
             .height(64.dp)
             .border(

@@ -19,9 +19,13 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.rickandmorty.R
@@ -147,12 +151,15 @@ fun CharactersScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun CharacterCard(
     character: CharacterModel,
     onNavigateToCharacter: (character: CharacterModel) -> Unit
 ) {
     ElevatedCard(modifier = Modifier
+        .semantics { testTagsAsResourceId = true }
+        .testTag("character_${character.id}")
         .fillMaxWidth()
         .padding(vertical = 8.dp),
         onClick = {
