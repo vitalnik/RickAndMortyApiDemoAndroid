@@ -2,11 +2,11 @@ package com.example.rickandmorty.app.utils
 
 sealed class ViewState<out T : Any> {
 
-    object Initial : ViewState<Nothing>()
+    data object Initial : ViewState<Nothing>()
 
-    object Loading : ViewState<Nothing>()
+    data object Loading : ViewState<Nothing>()
 
-    object Empty : ViewState<Nothing>()
+    data object Empty : ViewState<Nothing>()
 
     data class Error(val errorCode: String) : ViewState<Nothing>()
 
