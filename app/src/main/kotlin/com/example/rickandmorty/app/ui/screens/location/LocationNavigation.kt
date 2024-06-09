@@ -1,14 +1,16 @@
 package com.example.rickandmorty.app.ui.screens.location
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.rickandmorty.app.Screen
+import androidx.navigation.toRoute
+import com.example.rickandmorty.app.CharacterRoute
+import com.example.rickandmorty.app.HomeRoute
+import com.example.rickandmorty.app.LocationRoute
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -16,26 +18,20 @@ fun NavGraphBuilder.locationScreen(
     navController: NavHostController,
 ) {
 
-    composable(
-        route = Screen.Location.route, arguments = listOf(
-            navArgument(Screen.Location.locationId) { defaultValue = 1 },
-        )
-    ) { backStackEntry ->
+    composable<LocationRoute> { backStackEntry ->
 
         val viewModel = hiltViewModel<LocationViewModel>()
 
-        val locationState by viewModel.locationFlow.collectAsStateWithLifecycle()
-        val charactersState by viewModel.charactersFlow.collectAsStateWithLifecycle()
+        val locationState by viewModel.locationFlow.collectAsState()
+        val charactersState by viewModel.charactersFlow.collectAsState()
 
-        val locationId = backStackEntry.arguments?.getInt(Screen.Location.locationId, 1)
+        val args = backStackEntry.toRoute<LocationRoute>()
 
         fun loadLocation() {
-            locationId?.let {
-                viewModel.getLocation(locationId = it)
-            }
+            viewModel.getLocation(locationId = args.locationId.toInt())
         }
 
-        LaunchedEffect(key1 = locationId) {
+        LaunchedEffect(key1 = args.locationId) {
             loadLocation()
         }
 
@@ -43,11 +39,10 @@ fun NavGraphBuilder.locationScreen(
             locationState = locationState,
             charactersState = charactersState,
             onNavigateToCharacter = {
-                val characterJson = Json.encodeToString(it)
                 navController.navigate(
-                    Screen.Character.createRoute(
-                        it.id.toString(),
-                        characterJson
+                    CharacterRoute(
+                        characterId = it.id.toString(),
+                        characterJson = Json.encodeToString(it)
                     )
                 )
             },
@@ -58,7 +53,7 @@ fun NavGraphBuilder.locationScreen(
                 navController.popBackStack()
             },
             onNavigateHome = {
-                navController.popBackStack(Screen.Home.route, inclusive = false)
+                navController.popBackStack(HomeRoute, inclusive = false)
             })
 
     }

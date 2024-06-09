@@ -1,14 +1,18 @@
 package com.example.rickandmorty.app.ui.screens.character
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.rickandmorty.app.Screen
+import androidx.navigation.toRoute
+import com.example.rickandmorty.app.CharacterImageRoute
+import com.example.rickandmorty.app.CharacterRoute
+import com.example.rickandmorty.app.EpisodeRoute
+import com.example.rickandmorty.app.HomeRoute
+import com.example.rickandmorty.app.LocationRoute
 import com.example.rickandmorty.domain.models.CharacterModel
 import kotlinx.serialization.json.Json
 
@@ -16,38 +20,26 @@ fun NavGraphBuilder.characterScreen(
     navController: NavHostController,
 ) {
 
-    composable(
-        route = Screen.Character.route,
-        arguments = listOf(
-            navArgument(Screen.Character.characterId) { defaultValue = 1 },
-            navArgument(Screen.Character.characterJson) { defaultValue = "" },
-        )
-    ) { backStackEntry ->
+    composable<CharacterRoute> { backStackEntry ->
 
         val viewModel = hiltViewModel<CharacterViewModel>()
 
-        val characterState by viewModel.characterFlow.collectAsStateWithLifecycle()
-        val episodesState by viewModel.episodesFlow.collectAsStateWithLifecycle()
+        val characterState by viewModel.characterFlow.collectAsState()
+        val episodesState by viewModel.episodesFlow.collectAsState()
 
-        val characterId = backStackEntry.arguments?.getInt(Screen.Character.characterId, 1)
-        val characterJson =
-            backStackEntry.arguments?.getString(Screen.Character.characterJson) ?: ""
+        val args = backStackEntry.toRoute<CharacterRoute>()
 
         fun loadCharacter() {
             try {
-                if (characterJson.isEmpty()) {
-                    throw IllegalArgumentException()
-                }
-                val character = Json.decodeFromString<CharacterModel>(characterJson)
-                viewModel.setCharacter(character)
+                viewModel.setCharacter(
+                    Json.decodeFromString<CharacterModel>(args.characterJson)
+                )
             } catch (e: Exception) {
-                characterId?.let {
-                    viewModel.getCharacter(characterId = it)
-                }
+                viewModel.getCharacter(characterId = args.characterId.toInt())
             }
         }
 
-        LaunchedEffect(key1 = characterId) {
+        LaunchedEffect(key1 = args.characterId) {
             loadCharacter()
         }
 
@@ -55,24 +47,31 @@ fun NavGraphBuilder.characterScreen(
             characterState = characterState,
             episodesState = episodesState,
             onNavigateToEpisode = {
-                navController.navigate(Screen.Episode.createRoute(episodeId = it.toString()))
+                navController.navigate(
+                    EpisodeRoute(episodeId = it.toString())
+                )
             },
             onNavigateToLocation = {
-                navController.navigate(Screen.Location.createRoute(locationId = it.toString()))
+                navController.navigate(
+                    LocationRoute(locationId = it.toString())
+                )
             },
             onRetry = {
                 loadCharacter()
             },
             onCharacterImageClick = { url ->
-                navController.navigate(Screen.CharacterImage.createRoute(imageUrl = url))
+                navController.navigate(
+                    CharacterImageRoute(
+                        imageUrl = url
+                    )
+                )
             },
             onBackPress = {
                 navController.popBackStack()
             },
             onNavigateHome = {
-                navController.popBackStack(Screen.Home.route, inclusive = false)
+                navController.popBackStack(HomeRoute, inclusive = false)
             }
         )
     }
 }
-

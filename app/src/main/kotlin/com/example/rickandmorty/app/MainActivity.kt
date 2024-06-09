@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.Home.route,
+                        startDestination = HomeRoute,
                     ) {
                         buildNavigationGraph(navController = navController)
                     }
@@ -61,5 +61,4 @@ class MainActivity : ComponentActivity() {
         locationsScreen(navController = navController, mainViewModel)
         locationScreen(navController = navController)
     }
-
 }

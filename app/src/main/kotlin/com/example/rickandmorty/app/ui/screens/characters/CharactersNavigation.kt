@@ -14,8 +14,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.rickandmorty.app.CharacterRoute
+import com.example.rickandmorty.app.CharactersRoute
 import com.example.rickandmorty.app.MainViewModel
-import com.example.rickandmorty.app.Screen
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ fun NavGraphBuilder.charactersScreen(
     mainViewModel: MainViewModel
 ) {
 
-    composable(route = Screen.Characters.route) {
+    composable<CharactersRoute> {
 
         val scope = rememberCoroutineScope()
         var refreshJob by remember { mutableStateOf<Job?>(Job()) }
@@ -107,11 +108,10 @@ fun NavGraphBuilder.charactersScreen(
                 alertDialogVisible = false
             },
             onNavigateToCharacter = {
-                val characterJson = Json.encodeToString(it)
                 navController.navigate(
-                    Screen.Character.createRoute(
+                    CharacterRoute(
                         characterId = it.id.toString(),
-                        characterJson = characterJson
+                        characterJson = Json.encodeToString(it)
                     )
                 )
             },

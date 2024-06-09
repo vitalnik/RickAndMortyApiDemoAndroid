@@ -15,15 +15,16 @@ import androidx.navigation.compose.composable
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.rickandmorty.R
+import com.example.rickandmorty.app.EpisodeRoute
+import com.example.rickandmorty.app.EpisodesRoute
 import com.example.rickandmorty.app.MainViewModel
-import com.example.rickandmorty.app.Screen
 
 fun NavGraphBuilder.episodesScreen(
     navController: NavHostController,
     mainViewModel: MainViewModel
 ) {
 
-    composable(route = Screen.Episodes.route) {
+    composable<EpisodesRoute> {
 
         val viewModel = hiltViewModel<EpisodesViewModel>()
 
@@ -107,7 +108,12 @@ fun NavGraphBuilder.episodesScreen(
                 pagingItems.refresh()
             },
             onNavigateToEpisode = {
-                navController.navigate(Screen.Episode.createRoute(it.toString()))
+                navController.navigate(
+                    EpisodeRoute(
+                        episodeId = it.toString()
+                    )
+                )
+
             },
             onBackPress = {
                 navController.popBackStack()
