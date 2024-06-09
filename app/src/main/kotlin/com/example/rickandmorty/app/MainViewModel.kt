@@ -18,6 +18,7 @@ import com.example.rickandmorty.domain.usecases.episode.GetEpisodesUseCase
 import com.example.rickandmorty.domain.usecases.location.GetLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 import javax.inject.Inject
 
 const val FIRST_PAGE_INDEX = 1
@@ -29,6 +30,10 @@ class MainViewModel @Inject constructor(
     private val getLocationsUseCase: GetLocationsUseCase,
     private val getEpisodesUseCase: GetEpisodesUseCase,
 ) : ViewModel() {
+
+    init {
+        Timber.d(">>> MainViewModel SINGLETON")
+    }
 
     val characterNameSearchValue = mutableStateOf("")
 

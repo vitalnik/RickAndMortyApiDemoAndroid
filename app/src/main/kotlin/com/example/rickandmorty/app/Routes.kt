@@ -11,7 +11,7 @@ object CharactersRoute
 @Serializable
 data class CharacterRoute(
     val characterId: String,
-    //val character: CharacterModel,
+    //val character: CharacterModel, //TODO: investigate serializable as a field
     val characterJson: String
 )
 
