@@ -2,9 +2,7 @@ package com.example.rickandmorty.data.analytics
 
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AnalyticsProvider @Inject constructor() {
 
     init {
