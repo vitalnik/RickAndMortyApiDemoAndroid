@@ -52,7 +52,6 @@ fun LocationsScreen(
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
         topBar = {
             TopAppBar(
                 title = {
@@ -68,13 +67,17 @@ fun LocationsScreen(
                     }
                 }, scrollBehavior = scrollBehavior
             )
-        }) { scaffoldPadding ->
+        }
+    ) { scaffoldPadding ->
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = scaffoldPadding.calculateTopPadding(), start = 16.dp, end = 16.dp
+                    top = scaffoldPadding.calculateTopPadding(),
+                    bottom = scaffoldPadding.calculateBottomPadding(),
+                    start = 16.dp,
+                    end = 16.dp
                 )
         ) {
 

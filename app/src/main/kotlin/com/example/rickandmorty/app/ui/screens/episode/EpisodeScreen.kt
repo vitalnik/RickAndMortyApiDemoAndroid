@@ -80,6 +80,7 @@ fun EpisodeScreen(
                 .fillMaxSize()
                 .padding(
                     top = scaffoldPadding.calculateTopPadding(),
+                    bottom = scaffoldPadding.calculateBottomPadding(),
                     start = 16.dp,
                     end = 16.dp
                 )

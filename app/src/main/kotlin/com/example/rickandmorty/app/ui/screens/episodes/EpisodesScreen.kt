@@ -81,6 +81,7 @@ fun EpisodesScreen(
                 .fillMaxSize()
                 .padding(
                     top = scaffoldPadding.calculateTopPadding(),
+                    bottom = scaffoldPadding.calculateBottomPadding()
                 )
         ) {
 

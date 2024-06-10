@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,56 +30,56 @@ fun HomeScreen(
     // background image is kinds dark, use light icons
     SetSystemBarsColor(useDarkIcons = false)
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Box {
 
-        Image(
-            painter = painterResource(id = R.drawable.rickandmorty),
-            contentDescription = stringResource(id = R.string.app_name),
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            Spacer(
-                modifier = Modifier.weight(5f, true)
+            Image(
+                painter = painterResource(id = R.drawable.rickandmorty),
+                contentDescription = stringResource(id = R.string.app_name),
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.fillMaxSize()
             )
 
-            HomeButton(
-                text = stringResource(id = R.string.characters),
-                testTag = "characters_button",
-                onClick = onNavigateToCharacters
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            VerticalSpacer()
+                Spacer(
+                    modifier = Modifier.weight(5f, true)
+                )
 
-            HomeButton(
-                text = stringResource(id = R.string.locations),
-                testTag = "locations_button",
-                onClick = onNavigateToLocations
-            )
+                HomeButton(
+                    text = stringResource(id = R.string.characters),
+                    testTag = "characters_button",
+                    onClick = onNavigateToCharacters
+                )
 
-            VerticalSpacer()
+                VerticalSpacer()
 
-            HomeButton(
-                text = stringResource(id = R.string.episodes),
-                testTag = "episodes_button",
-                onClick = onNavigateToEpisodes
-            )
+                HomeButton(
+                    text = stringResource(id = R.string.locations),
+                    testTag = "locations_button",
+                    onClick = onNavigateToLocations
+                )
 
-            Spacer(
-                modifier = Modifier.weight(1f, true)
-            )
+                VerticalSpacer()
+
+                HomeButton(
+                    text = stringResource(id = R.string.episodes),
+                    testTag = "episodes_button",
+                    onClick = onNavigateToEpisodes
+                )
+
+                Spacer(
+                    modifier = Modifier.weight(1f, true)
+                )
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true)

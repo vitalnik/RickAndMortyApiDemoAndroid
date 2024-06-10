@@ -1,9 +1,6 @@
 package com.example.rickandmorty.app
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -26,16 +23,14 @@ fun RickAndMortyApp() {
     val mainViewModel = hiltViewModel<MainViewModel>()
 
     RickAndMortyTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            NavHost(
+        NavHost(
+            navController = navController,
+            startDestination = HomeRoute,
+        ) {
+            buildNavigationGraph(
                 navController = navController,
-                startDestination = HomeRoute,
-            ) {
-                buildNavigationGraph(
-                    navController = navController,
-                    mainViewModel = mainViewModel
-                )
-            }
+                mainViewModel = mainViewModel
+            )
         }
     }
 }
